@@ -157,13 +157,13 @@ details[open] .chev{transform:rotate(180deg)}
 .papers b{color:var(--text);font-weight:600}
 
 /* deep dives */
-.dives{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.dives{margin:4px 0 8px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 @media (max-width:860px){.dives{grid-template-columns:1fr}}
-.dive{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow)}
+.dive{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
 .dive .area{font:600 11px "JetBrains Mono",monospace;color:var(--accent);letter-spacing:.06em;text-transform:uppercase}
 .dive h3{margin:4px 0 10px;font-size:16px;line-height:1.5}
 .dive .ba{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;margin-bottom:10px}
-.dive .ba span{background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:2px 9px}
+.dive .ba span{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:2px 9px}
 .dive .ba span span{background:none;border:0;padding:0}
 .dive .ba span.after{background:color-mix(in srgb,var(--accent-2) 14%,transparent);border-color:transparent;color:var(--text);font-weight:600}
 .dive .ba i{font-style:normal;color:var(--muted)}
@@ -197,7 +197,6 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
   <div class="wrap">
     <a class="brand" href="#top">Hikaru Miyashita</a>
     <nav class="links">
-      <a href="#deepdives"><span lang="ja">具体例</span><span lang="en">Deep dives</span></a>
       <a href="#experience"><span lang="ja">職務経歴</span><span lang="en">Experience</span></a>
       <a href="#strengths"><span lang="ja">強み</span><span lang="en">Strengths</span></a>
       <a href="#skills"><span lang="ja">スキル</span><span lang="en">Skills</span></a>
@@ -225,41 +224,8 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
     </p>
   </div>
 
-  <!-- DEEP DIVES -->
-  <section id="deepdives" style="border-top:none;padding-top:8px">
-    <div class="sec-head">
-      <div class="kicker">Deep Dives</div>
-      <h2><span lang="ja">掘り下げの具体例</span><span lang="en">Deep dives</span></h2>
-      <p lang="ja">リアルタイム画像認識の案件で行ったGPU最適化の例です（NDAのため対象は伏せています）。</p>
-      <p lang="en">GPU optimizations from a real-time vision project (domain withheld under NDA).</p>
-    </div>
-    <div class="dives">
-      <div class="dive">
-        <div class="area">CUDA C++</div>
-        <h3><span lang="ja">CUDAカーネルの自作</span><span lang="en">Custom CUDA kernel</span></h3>
-        <div class="ba"><span><span lang="ja">torch演算 約10個</span><span lang="en">~10 torch ops</span></span><i>→</i><span class="after"><span lang="ja">カーネル2個</span><span lang="en">2 kernels</span></span></div>
-        <p lang="ja">推論後の候補抽出を自作カーネルに置き換え、GPUとの同期回数を削減。結果は元の処理と完全に一致。</p>
-        <p lang="en">Replaced post-inference candidate selection with a hand-written kernel, cutting GPU syncs. Output identical to the original.</p>
-      </div>
-      <div class="dive">
-        <div class="area">CUDA Graph</div>
-        <h3><span lang="ja">GPUの待ち時間をなくす</span><span lang="en">Removing GPU idle time</span></h3>
-        <div class="ba"><span><span lang="ja">短いカーネル 約230個</span><span lang="en">~230 short kernels</span></span><i>→</i><span class="after"><span lang="ja">CUDA Graph 1回</span><span lang="en">1 CUDA Graph</span></span></div>
-        <p lang="ja">GPUがCPUからの起動待ちで空いていることを突き止め、1フレーム分の処理をまとめて再生する方式に。</p>
-        <p lang="en">Found the GPU idling while waiting on CPU launches; captured a whole frame of work and replayed it at once.</p>
-      </div>
-      <div class="dive">
-        <div class="area">Triton</div>
-        <h3><span lang="ja">後処理のカーネル融合</span><span lang="en">Fusing post-processing</span></h3>
-        <div class="ba"><span><span lang="ja">小さなカーネル 約50個</span><span lang="en">~50 tiny kernels</span></span><i>→</i><span class="after"><span lang="ja">Tritonカーネル2個</span><span lang="en">2 Triton kernels</span></span></div>
-        <p lang="ja">計算量より起動コストが支配的だったマスク後処理を、Tritonで2つのカーネルにまとめた。</p>
-        <p lang="en">Mask post-processing was dominated by launch overhead, not compute; fused it into two Triton kernels.</p>
-      </div>
-    </div>
-  </section>
-
   <!-- EXPERIENCE -->
-  <section id="experience">
+  <section id="experience" style="border-top:none;padding-top:8px">
     <div class="sec-head">
       <div class="kicker">Experience</div>
       <h2><span lang="ja">職務経歴</span><span lang="en">Experience</span></h2>
@@ -280,6 +246,30 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
           <div class="proj-body">
             <p lang="ja">カメラ映像のみから特定プロセスの進行をリアルタイムに自動認識。深層学習モデル、トラッキング、状態推定、集計データとの整合性検証、監視UIまでをエンドツーエンドで構築。</p>
             <p lang="en">Recognizes the progress of a specific process in real time from camera video alone. Built end-to-end: deep-learning models, tracking, state estimation, consistency checks against aggregated data and a monitoring UI.</p>
+            <h5><span lang="ja">工夫した点（GPU最適化）</span><span lang="en">Highlights (GPU optimization)</span></h5>
+            <div class="dives">
+              <div class="dive">
+                <div class="area">CUDA C++</div>
+                <h3><span lang="ja">CUDAカーネルの自作</span><span lang="en">Custom CUDA kernel</span></h3>
+                <div class="ba"><span><span lang="ja">torch演算 約10個</span><span lang="en">~10 torch ops</span></span><i>→</i><span class="after"><span lang="ja">カーネル2個</span><span lang="en">2 kernels</span></span></div>
+                <p lang="ja">推論後の候補抽出を自作カーネルに置き換え、GPUとの同期回数を削減。結果は元の処理と完全に一致。</p>
+                <p lang="en">Replaced post-inference candidate selection with a hand-written kernel, cutting GPU syncs. Output identical to the original.</p>
+              </div>
+              <div class="dive">
+                <div class="area">CUDA Graph</div>
+                <h3><span lang="ja">GPUの待ち時間をなくす</span><span lang="en">Removing GPU idle time</span></h3>
+                <div class="ba"><span><span lang="ja">短いカーネル 約230個</span><span lang="en">~230 short kernels</span></span><i>→</i><span class="after"><span lang="ja">CUDA Graph 1回</span><span lang="en">1 CUDA Graph</span></span></div>
+                <p lang="ja">GPUがCPUからの起動待ちで空いていることを突き止め、1フレーム分の処理をまとめて再生する方式に。</p>
+                <p lang="en">Found the GPU idling while waiting on CPU launches; captured a whole frame of work and replayed it at once.</p>
+              </div>
+              <div class="dive">
+                <div class="area">Triton</div>
+                <h3><span lang="ja">後処理のカーネル融合</span><span lang="en">Fusing post-processing</span></h3>
+                <div class="ba"><span><span lang="ja">小さなカーネル 約50個</span><span lang="en">~50 tiny kernels</span></span><i>→</i><span class="after"><span lang="ja">Tritonカーネル2個</span><span lang="en">2 Triton kernels</span></span></div>
+                <p lang="ja">計算量より起動コストが支配的だったマスク後処理を、Tritonで2つのカーネルにまとめた。</p>
+                <p lang="en">Mask post-processing was dominated by launch overhead, not compute; fused it into two Triton kernels.</p>
+              </div>
+            </div>
             <h5><span lang="ja">深層学習モデル</span><span lang="en">Deep learning</span></h5>
             <ul lang="ja">
               <li>インスタンスセグメンテーションで複数種類の対象物と作業者領域を検出。セマンティックセグメンテーションのヘッド設計・学習・推論最適化を担当</li>
