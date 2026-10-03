@@ -1,6 +1,6 @@
 # Hikaru Miyashita — Portfolio
 
-AI/ML・フルスタックエンジニア 宮下 光 の経歴サイト（Firebase Hosting）。
+AI/ML・フルスタックエンジニア 宮下 晃 の経歴サイト（Firebase Hosting）。
 
 ## 構成
 
