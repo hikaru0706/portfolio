@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>宮下 晃 | AI/ML・フルスタックエンジニア</title>
-<meta name="description" content="福岡在住のAI/ML・フルスタックエンジニア。エッジAI映像解析、LLMセルフホスト基盤、Java/Springマイグレーション、AWS上の大規模業務システム開発。">
+<title>宮下 晃 | 職務経歴</title>
+<meta name="description" content="宮下 晃の職務経歴。CUDA / GPU などの低レイヤ、エッジAI映像解析、LLMセルフホスト基盤、Java/Springマイグレーション、AWS上の大規模業務システム開発。福岡在住。">
 <meta property="og:type" content="website">
-<meta property="og:title" content="宮下 晃 | AI/ML・フルスタックエンジニア">
+<meta property="og:title" content="宮下 晃 | 職務経歴">
 <meta property="og:description" content="エッジAI映像解析 / LLMセルフホスト基盤 / 大規模業務システム">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231f4fd8'/%3E%3Ctext x='16' y='22' font-family='Arial' font-weight='700' font-size='15' fill='white' text-anchor='middle'%3EHM%3C/text%3E%3C/svg%3E">
@@ -115,7 +115,7 @@ section{padding:64px 0;border-top:1px solid var(--line)}
 
 /* timeline */
 .timeline{position:relative}
-.job{display:grid;grid-template-columns:150px 1fr;gap:24px;padding:0 0 12px}
+.job{padding:0 0 12px}
 @media (max-width:700px){.job{grid-template-columns:1fr;gap:6px}}
 .job .when{font:500 13px "JetBrains Mono",monospace;color:var(--muted);padding-top:20px}
 details.proj{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:4px}
@@ -146,7 +146,7 @@ details[open] .chev{transform:rotate(180deg)}
 
 /* background */
 .bg-list{display:grid;gap:12px}
-.bg-item{display:grid;grid-template-columns:150px 1fr;gap:24px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 22px}
+.bg-item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 22px}
 @media (max-width:700px){.bg-item{grid-template-columns:1fr;gap:4px}}
 .bg-item .when{font:500 13px "JetBrains Mono",monospace;color:var(--muted)}
 .bg-item h4{margin:0 0 4px;font-size:16px}
@@ -202,8 +202,8 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
   <div class="hero">
     <h1><span lang="ja">宮下 晃</span><span lang="en">Hikaru Miyashita</span></h1>
     <p class="role">
-      <span lang="ja"><em>AI/ML</em> × <em>フルスタック</em> エンジニア ｜ 低レイヤ（CUDA / GPU）まで掘り下げる ｜ 福岡</span>
-      <span lang="en"><em>AI/ML</em> × <em>Full-stack</em> Engineer ｜ Digs down to the low level (CUDA / GPU) ｜ Fukuoka, Japan</span>
+      <span lang="ja">低レイヤ（<em>CUDA</em> / <em>GPU</em>）まで掘り下げる ｜ 福岡</span>
+      <span lang="en">Digs down to the low level (<em>CUDA</em> / <em>GPU</em>) ｜ Fukuoka, Japan</span>
       <a class="hero-contact" href="#contact"><span lang="ja">ご相談はこちら →</span><span lang="en">Contact →</span></a>
     </p>
   </div>
@@ -213,8 +213,6 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
     <div class="sec-head">
       <div class="kicker">Experience</div>
       <h2><span lang="ja">職務経歴</span><span lang="en">Experience</span></h2>
-      <p lang="ja">各項目をクリックすると詳細を表示します。</p>
-      <p lang="en">Click a project to expand the details.</p>
     </div>
 
     <div class="timeline">
@@ -222,14 +220,12 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
       <div class="label-group"><span lang="ja">AI / ML</span><span lang="en">AI / ML</span></div>
 
       <div class="job">
-        <div class="when"><span lang="ja">直近</span><span lang="en">Recent</span></div>
         <details class="proj" open>
           <summary>
             <div class="sum-top"><div>
               <h3><span lang="ja">カメラ映像からプロセス進行を自動認識する映像解析システム</span><span lang="en">Real-time video analytics that recognizes process progress from camera feeds</span></h3>
-              <div class="meta"><span lang="ja">フルスタック開発・AI/MLエンジニア</span><span lang="en">Full-stack & AI/ML Engineer</span></div>
             </div><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
-            <div class="tags"><span class="tag hl">PyTorch</span><span class="tag hl">TensorRT</span><span class="tag hl">CUDA C++ カーネル</span><span class="tag">OpenCV</span><span class="tag">ONNX Runtime</span><span class="tag">Go / Gin</span><span class="tag">React</span><span class="tag">WebSocket</span><span class="tag">GitHub Actions</span></div>
+            <div class="tags"><span class="tag hl">PyTorch</span><span class="tag hl">TensorRT</span><span class="tag hl">CUDA kernels</span><span class="tag">OpenCV</span><span class="tag">ONNX Runtime</span><span class="tag">Go / Gin</span><span class="tag">React</span><span class="tag">WebSocket</span><span class="tag">GitHub Actions</span></div>
           </summary>
           <div class="proj-body">
             <p lang="ja">カメラ映像のみから特定プロセスの進行をリアルタイムに自動認識。深層学習モデル、トラッキング、状態推定、集計データとの整合性検証、監視UIまでをエンドツーエンドで構築。</p>
@@ -279,12 +275,11 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
       </div>
 
       <div class="job">
-        <div class="when">2026.02 –</div>
-        <details class="proj">
+        <details class="proj" open>
           <summary>
             <div class="sum-top"><div>
               <h3><span lang="ja">公共系業務システムのJava/Springマイグレーション ＋ 社内LLM基盤</span><span lang="en">Java/Spring migration for public-sector systems + in-house LLM platform</span></h3>
-              <div class="meta"><span lang="ja">バックエンドエンジニア（移行担当） / オンライン・バッチ計4システム</span><span lang="en">Backend Engineer (migration) / 4 online & batch systems</span></div>
+              <div class="meta"><span lang="ja">オンライン・バッチ計4システム</span><span lang="en">4 online & batch systems</span></div>
             </div><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
             <div class="tags"><span class="tag hl">Java 11→21</span><span class="tag hl">Spring Boot 3</span><span class="tag hl">vLLM</span><span class="tag">OpenRewrite</span><span class="tag">Spring Batch 5</span><span class="tag">LiteLLM</span><span class="tag">Claude Code</span><span class="tag">PostgreSQL</span></div>
           </summary>
@@ -324,8 +319,7 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
       <div class="label-group"><span lang="ja">業務システム・Web・クラウド</span><span lang="en">Enterprise, Web & Cloud</span></div>
 
       <div class="job">
-        <div class="when">2025.07 –</div>
-        <details class="proj">
+        <details class="proj" open>
           <summary>
             <div class="sum-top"><div>
               <h3><span lang="ja">大手ガス会社向け 託送契約管理システム</span><span lang="en">Gas-transmission contract management for a major utility</span></h3>
@@ -353,8 +347,7 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
       </div>
 
       <div class="job">
-        <div class="when">2024.07 –</div>
-        <details class="proj">
+        <details class="proj" open>
           <summary>
             <div class="sum-top"><div>
               <h3><span lang="ja">小売業向け 受発注・在庫管理の基幹システム</span><span lang="en">Order & inventory management system for retail</span></h3>
@@ -380,8 +373,7 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
       </div>
 
       <div class="job">
-        <div class="when">2024.12 – 2025.02</div>
-        <details class="proj">
+        <details class="proj" open>
           <summary>
             <div class="sum-top"><div>
               <h3><span lang="ja">複数ECサイト向け 在庫引き当てAPI ／ 夜間バッチ</span><span lang="en">Inventory allocation API for multiple e-commerce sites / nightly batch</span></h3>
@@ -405,8 +397,7 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
       </div>
 
       <div class="job">
-        <div class="when">2024.10 –</div>
-        <details class="proj">
+        <details class="proj" open>
           <summary>
             <div class="sum-top"><div>
               <h3><span lang="ja">小売業向けECサイト（SSR / PWA）</span><span lang="en">Retail e-commerce site (SSR / PWA)</span></h3>
@@ -428,8 +419,7 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
       </div>
 
       <div class="job">
-        <div class="when">2024.07 – 2024.10</div>
-        <details class="proj">
+        <details class="proj" open>
           <summary>
             <div class="sum-top"><div>
               <h3><span lang="ja">基幹システムの帳票出力API</span><span lang="en">Report-generation API for a core system</span></h3>
@@ -445,8 +435,7 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
       </div>
 
       <div class="job">
-        <div class="when">2023.09 – 2024.06</div>
-        <details class="proj">
+        <details class="proj" open>
           <summary>
             <div class="sum-top"><div>
               <h3><span lang="ja">半導体製造部品の法人向けECサイト</span><span lang="en">B2B e-commerce for semiconductor equipment parts</span></h3>
@@ -468,8 +457,7 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
       </div>
 
       <div class="job">
-        <div class="when">2023.08 – 2024.02</div>
-        <details class="proj">
+        <details class="proj" open>
           <summary>
             <div class="sum-top"><div>
               <h3><span lang="ja">リアルタイムライブ配信サービス</span><span lang="en">Real-time live streaming service</span></h3>
@@ -485,8 +473,7 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
       </div>
 
       <div class="job">
-        <div class="when">2022.11 – 2023.09</div>
-        <details class="proj">
+        <details class="proj" open>
           <summary>
             <div class="sum-top"><div>
               <h3><span lang="ja">社内システム・オンプレ基盤の設計構築</span><span lang="en">Internal systems & on-prem infrastructure</span></h3>
@@ -512,8 +499,7 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
       </div>
 
       <div class="job">
-        <div class="when">2022.05 – 2022.10</div>
-        <details class="proj">
+        <details class="proj" open>
           <summary>
             <div class="sum-top"><div>
               <h3><span lang="ja">決済サービスのAPI刷新（サーバレス移行）</span><span lang="en">Payment-service API overhaul (serverless migration)</span></h3>
@@ -529,8 +515,7 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
       </div>
 
       <div class="job">
-        <div class="when">2020.07 – 2022.03</div>
-        <details class="proj">
+        <details class="proj" open>
           <summary>
             <div class="sum-top"><div>
               <h3><span lang="ja">社内業務アプリ・AWSデータ基盤の構築運用</span><span lang="en">Internal apps & AWS data platform</span></h3>
@@ -556,8 +541,7 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
       </div>
 
       <div class="job">
-        <div class="when">2019.04 – 2020.06</div>
-        <details class="proj">
+        <details class="proj" open>
           <summary>
             <div class="sum-top"><div>
               <h3><span lang="ja">保険会社向け 入院履歴登録システム</span><span lang="en">Hospitalization-record system for an insurer</span></h3>
@@ -671,18 +655,18 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
       <p lang="en">Academic background in mathematical modeling. I'm currently studying CPU/GPU architecture and Domain Specific Architectures — a curiosity that started with Go's goroutines.</p>
     </div>
     <div class="bg-list">
-      <div class="bg-item"><div class="when">2024.09 – 2024.12</div><div>
+      <div class="bg-item"><div>
         <h4><span lang="ja">クアッドコプタのPID自律制御（組み込み）</span><span lang="en">PID flight control for a quadcopter (embedded)</span></h4>
         <p lang="ja">M5StampFlyを題材に、回路図・ICデータシートを解析し、C++でモーター制御・姿勢制御をオブジェクト指向設計。HALの設計指針を学びマイコン制御をパターン化。</p>
         <p lang="en">On M5StampFly: read schematics and IC datasheets, designed motor and attitude control in object-oriented C++, and applied HAL patterns.</p>
       </div></div>
-      <div class="bg-item"><div class="when">2016.04 – 2018.03</div><div>
+      <div class="bg-item"><div>
         <h4><span lang="ja">アクチュアリー（フランス系外資生命保険会社・東京）</span><span lang="en">Actuary — French-owned life insurer, Tokyo</span></h4>
         <p lang="ja">保険商品設計と保険料・責任準備金の算定モデルを構築。C++で基数計算アルゴリズムを実装し、VBA・Pythonで定型業務を約30%削減。</p>
         <p lang="en">Built premium and reserve models for life and medical products; implemented commutation calculations in C++ and cut routine work by ~30% with VBA and Python.</p>
       </div></div>
-      <div class="bg-item"><div class="when"><span lang="ja">学生時代</span><span lang="en">University</span></div><div>
-        <h4><span lang="ja">機械学習による渋滞予測 / FPGA</span><span lang="en">Traffic-congestion prediction with ML / FPGA</span></h4>
+      <div class="bg-item"><div>
+        <h4><span lang="ja">学生時代：機械学習による渋滞予測 / FPGA</span><span lang="en">University: traffic-congestion prediction with ML / FPGA</span></h4>
         <p lang="ja">交通量・気象・時間帯などからランダムフォレスト・XGBoostで渋滞発生を予測し、特徴量の寄与を可視化。C++による数理モデル研究、FPGAの経験あり。</p>
         <p lang="en">Predicted congestion from traffic, weather and time features with random forests and XGBoost, with feature-importance analysis. Mathematical modeling in C++ and FPGA experience.</p>
       </div></div>
