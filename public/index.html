@@ -96,8 +96,8 @@ section{padding:64px 0;border-top:1px solid var(--line)}
 .sec-head h2{font-size:clamp(24px,3.4vw,32px);margin:6px 0 0;letter-spacing:-.01em;font-weight:800}
 .sec-head p{color:var(--muted);margin:8px 0 0;max-width:720px}
 
-.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-@media (max-width:860px){.grid-3{grid-template-columns:1fr}}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media (max-width:760px){.grid-2{grid-template-columns:1fr}}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;box-shadow:var(--shadow)}
 .card .ico{width:40px;height:40px;border-radius:10px;background:var(--accent-soft);color:var(--accent);
   display:grid;place-items:center;margin-bottom:14px}
@@ -182,6 +182,7 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
     <a class="brand" href="#top">Hikaru Miyashita</a>
     <nav class="links">
       <a href="#experience"><span lang="ja">職務経歴</span><span lang="en">Experience</span></a>
+      <a href="#strengths"><span lang="ja">強み</span><span lang="en">Strengths</span></a>
       <a href="#skills"><span lang="ja">スキル</span><span lang="en">Skills</span></a>
       <a href="#background"><span lang="ja">バックグラウンド</span><span lang="en">Background</span></a>
       <a href="#services"><span lang="ja">対応領域</span><span lang="en">Services</span></a>
@@ -201,8 +202,8 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
   <div class="hero">
     <h1><span lang="ja">宮下 晃</span><span lang="en">Hikaru Miyashita</span></h1>
     <p class="role">
-      <span lang="ja"><em>AI/ML</em> × <em>フルスタック</em> エンジニア ｜ 福岡</span>
-      <span lang="en"><em>AI/ML</em> × <em>Full-stack</em> Engineer ｜ Fukuoka, Japan</span>
+      <span lang="ja"><em>AI/ML</em> × <em>フルスタック</em> エンジニア ｜ 低レイヤ（CUDA / GPU）まで掘り下げる ｜ 福岡</span>
+      <span lang="en"><em>AI/ML</em> × <em>Full-stack</em> Engineer ｜ Digs down to the low level (CUDA / GPU) ｜ Fukuoka, Japan</span>
       <a class="hero-contact" href="#contact"><span lang="ja">ご相談はこちら →</span><span lang="en">Contact →</span></a>
     </p>
   </div>
@@ -228,7 +229,7 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
               <h3><span lang="ja">カメラ映像からプロセス進行を自動認識する映像解析システム</span><span lang="en">Real-time video analytics that recognizes process progress from camera feeds</span></h3>
               <div class="meta"><span lang="ja">フルスタック開発・AI/MLエンジニア</span><span lang="en">Full-stack & AI/ML Engineer</span></div>
             </div><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
-            <div class="tags"><span class="tag hl">PyTorch</span><span class="tag hl">TensorRT</span><span class="tag hl">CUDA</span><span class="tag">OpenCV</span><span class="tag">ONNX Runtime</span><span class="tag">Go / Gin</span><span class="tag">React</span><span class="tag">WebSocket</span><span class="tag">GitHub Actions</span></div>
+            <div class="tags"><span class="tag hl">PyTorch</span><span class="tag hl">TensorRT</span><span class="tag hl">CUDA C++ カーネル</span><span class="tag">OpenCV</span><span class="tag">ONNX Runtime</span><span class="tag">Go / Gin</span><span class="tag">React</span><span class="tag">WebSocket</span><span class="tag">GitHub Actions</span></div>
           </summary>
           <div class="proj-body">
             <p lang="ja">カメラ映像のみから特定プロセスの進行をリアルタイムに自動認識。深層学習モデル、トラッキング、状態推定、集計データとの整合性検証、監視UIまでをエンドツーエンドで構築。</p>
@@ -237,11 +238,13 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
             <ul lang="ja">
               <li>インスタンスセグメンテーションで複数種類の対象物と作業者領域を検出。セマンティックセグメンテーションのヘッド設計・学習・推論最適化を担当</li>
               <li>Albumentationsによるデータ拡張、COCO形式データセットの前処理・学習パイプラインを実装</li>
+              <li><b>CUDAカーネルを自作</b>し、ボトルネックとなる処理をGPU上で実装</li>
               <li>TensorRT系ツールでGPU推論を最適化し、エッジ端末上の推論を高速化</li>
             </ul>
             <ul lang="en">
               <li>Instance segmentation for multiple object types and worker regions; designed, trained and optimized a semantic-segmentation head</li>
               <li>Albumentations augmentation and a COCO-format preprocessing / training pipeline</li>
+              <li><b>Wrote custom CUDA kernels</b> to move bottleneck processing onto the GPU</li>
               <li>GPU inference optimization with TensorRT tooling for faster edge inference</li>
             </ul>
             <h5><span lang="ja">リアルタイム解析パイプライン</span><span lang="en">Real-time pipeline</span></h5>
@@ -572,6 +575,69 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
     </div>
   </section>
 
+  <!-- STRENGTHS -->
+  <section id="strengths">
+    <div class="sec-head">
+      <div class="kicker">Strengths</div>
+      <h2><span lang="ja">強み</span><span lang="en">What I bring</span></h2>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg></div>
+        <h3><span lang="ja">低レイヤまで掘り下げる調査力</span><span lang="en">Digging into the low level</span></h3>
+        <p lang="ja">ライブラリの内側やハードウェアまで降りて原因と性能を突き詰めるのが一番の強みです。必要なら自分で書きます。</p>
+        <p lang="en">My core strength: going beneath the libraries, down to the hardware, to find root causes and performance — and writing it myself when needed.</p>
+        <ul>
+          <li lang="ja">画像認識でCUDAカーネルを自作しGPU処理を実装</li>
+          <li lang="en">Custom CUDA kernels for image recognition</li>
+          <li lang="ja">TensorRTによる推論最適化、CPU/GPUアーキテクチャの研究</li>
+          <li lang="en">TensorRT optimization; studying CPU/GPU architecture</li>
+          <li lang="ja">回路図・ICデータシートの解析、HAL設計、FPGA</li>
+          <li lang="en">Schematics, IC datasheets, HAL design, FPGA</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+        <h3><span lang="ja">リアルタイム映像解析 / エッジAI</span><span lang="en">Real-time Vision / Edge AI</span></h3>
+        <p lang="ja">インスタンスセグメンテーション、多物体トラッキング、状態推定をGPU最適化して現場で動かすところまで。</p>
+        <p lang="en">Instance segmentation, multi-object tracking and state estimation — optimized on GPU and shipped to the edge.</p>
+        <ul>
+          <li>PyTorch / TensorRT / ONNX Runtime</li>
+          <li lang="ja">CUDA対応OpenCVで推論スキップ・高速化</li>
+          <li lang="en">CUDA OpenCV for frame skipping & speed-up</li>
+          <li lang="ja">ハンガリアン法による追跡・遮蔽対応</li>
+          <li lang="en">Hungarian-method tracking with occlusion handling</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="7" rx="2"/><rect x="2" y="14" width="20" height="7" rx="2"/><path d="M6 6.5h.01M6 17.5h.01"/></svg></div>
+        <h3><span lang="ja">LLMセルフホスト × AIエージェント</span><span lang="en">Self-hosted LLM × AI Agents</span></h3>
+        <p lang="ja">機密コードを外に出さず、自社GPUサーバ上のLLMとコーディングエージェントで開発を自動化。</p>
+        <p lang="en">Automating development with coding agents on in-house GPU servers — sensitive code never leaves the network.</p>
+        <ul>
+          <li lang="ja">vLLMで550B MoEモデル（NVFP4）を運用</li>
+          <li lang="en">550B MoE model (NVFP4) served with vLLM</li>
+          <li lang="ja">LiteLLMゲートウェイ＋監視基盤</li>
+          <li lang="en">LiteLLM gateway with monitoring</li>
+          <li lang="ja">VMスナップショットで長時間自律実行</li>
+          <li lang="en">VM snapshots for long-horizon autonomy</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        <h3><span lang="ja">大規模業務システム / クラウド</span><span lang="en">Enterprise Systems / Cloud</span></h3>
+        <p lang="ja">公共・インフラ・小売・金融の基幹系。設計から実装、CI/CD、移行まで一貫して担当。</p>
+        <p lang="en">Core systems for public sector, utilities, retail and finance — design through implementation, CI/CD and migration.</p>
+        <ul>
+          <li>Java / Spring Boot / Angular / React</li>
+          <li>AWS EKS / Lambda / CodePipeline</li>
+          <li lang="ja">Java 11→21・Spring Boot 3 移行</li>
+          <li lang="en">Java 11→21, Spring Boot 3 migration</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
   <!-- SKILLS -->
   <section id="skills">
     <div class="sec-head">
@@ -582,7 +648,7 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
     </div>
     <div class="skills">
       <div class="card skill"><h4>AI / ML</h4><div class="tags">
-        <span class="tag hl">PyTorch</span><span class="tag hl">TensorRT</span><span class="tag">TorchVision</span><span class="tag">ONNX Runtime</span><span class="tag">OpenCV (CUDA)</span><span class="tag">CuPy</span><span class="tag">Albumentations</span><span class="tag">SciPy</span><span class="tag">scikit-learn</span><span class="tag">XGBoost</span><span class="tag">Rerun SDK</span></div></div>
+        <span class="tag hl">PyTorch</span><span class="tag hl">TensorRT</span><span class="tag hl">CUDA C++</span><span class="tag">TorchVision</span><span class="tag">ONNX Runtime</span><span class="tag">OpenCV (CUDA)</span><span class="tag">CuPy</span><span class="tag">Albumentations</span><span class="tag">SciPy</span><span class="tag">scikit-learn</span><span class="tag">XGBoost</span><span class="tag">Rerun SDK</span></div></div>
       <div class="card skill"><h4>LLM / AI Agents</h4><div class="tags">
         <span class="tag hl">vLLM</span><span class="tag hl">Claude Code</span><span class="tag">LiteLLM</span><span class="tag">Prometheus</span><span class="tag">Redis</span><span class="tag">GPU Server Ops</span></div></div>
       <div class="card skill"><h4><span lang="ja">言語</span><span lang="en">Languages</span></h4><div class="tags">
@@ -630,55 +696,6 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
       <li><b>Mask R-CNN</b> (He et al., 2017)</li>
       <li><b>YOLOv5 / YOLOv8</b> (Ultralytics, 2020–2023)</li>
     </ul>
-  </section>
-
-  <!-- STRENGTHS -->
-  <section id="strengths">
-    <div class="sec-head">
-      <div class="kicker">Strengths</div>
-      <h2><span lang="ja">3つの強み</span><span lang="en">What I bring</span></h2>
-    </div>
-    <div class="grid-3">
-      <div class="card">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
-        <h3><span lang="ja">リアルタイム映像解析 / エッジAI</span><span lang="en">Real-time Vision / Edge AI</span></h3>
-        <p lang="ja">インスタンスセグメンテーション、多物体トラッキング、状態推定をGPU最適化して現場で動かすところまで。</p>
-        <p lang="en">Instance segmentation, multi-object tracking and state estimation — optimized on GPU and shipped to the edge.</p>
-        <ul>
-          <li>PyTorch / TensorRT / ONNX Runtime</li>
-          <li lang="ja">CUDA対応OpenCVで推論スキップ・高速化</li>
-          <li lang="en">CUDA OpenCV for frame skipping & speed-up</li>
-          <li lang="ja">ハンガリアン法による追跡・遮蔽対応</li>
-          <li lang="en">Hungarian-method tracking with occlusion handling</li>
-        </ul>
-      </div>
-      <div class="card">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="7" rx="2"/><rect x="2" y="14" width="20" height="7" rx="2"/><path d="M6 6.5h.01M6 17.5h.01"/></svg></div>
-        <h3><span lang="ja">LLMセルフホスト × AIエージェント</span><span lang="en">Self-hosted LLM × AI Agents</span></h3>
-        <p lang="ja">機密コードを外に出さず、自社GPUサーバ上のLLMとコーディングエージェントで開発を自動化。</p>
-        <p lang="en">Automating development with coding agents on in-house GPU servers — sensitive code never leaves the network.</p>
-        <ul>
-          <li lang="ja">vLLMで550B MoEモデル（NVFP4）を運用</li>
-          <li lang="en">550B MoE model (NVFP4) served with vLLM</li>
-          <li lang="ja">LiteLLMゲートウェイ＋監視基盤</li>
-          <li lang="en">LiteLLM gateway with monitoring</li>
-          <li lang="ja">VMスナップショットで長時間自律実行</li>
-          <li lang="en">VM snapshots for long-horizon autonomy</li>
-        </ul>
-      </div>
-      <div class="card">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-        <h3><span lang="ja">大規模業務システム / クラウド</span><span lang="en">Enterprise Systems / Cloud</span></h3>
-        <p lang="ja">公共・インフラ・小売・金融の基幹系。設計から実装、CI/CD、移行まで一貫して担当。</p>
-        <p lang="en">Core systems for public sector, utilities, retail and finance — design through implementation, CI/CD and migration.</p>
-        <ul>
-          <li>Java / Spring Boot / Angular / React</li>
-          <li>AWS EKS / Lambda / CodePipeline</li>
-          <li lang="ja">Java 11→21・Spring Boot 3 移行</li>
-          <li lang="en">Java 11→21, Spring Boot 3 migration</li>
-        </ul>
-      </div>
-    </div>
   </section>
 
   <!-- SERVICES -->
