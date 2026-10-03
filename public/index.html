@@ -64,13 +64,14 @@ nav.links a:hover{color:var(--text);text-decoration:none}
 @media (max-width:760px){nav.links{display:none}.toggles{margin-left:auto}}
 
 /* hero */
-.hero{padding:88px 0 64px}
+.hero{padding:40px 0 24px}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--accent-2);
   background:color-mix(in srgb,var(--accent-2) 12%,transparent);padding:4px 12px;border-radius:999px}
 .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent-2)}
-.hero h1{font-size:clamp(34px,6vw,56px);line-height:1.15;letter-spacing:-.02em;margin:20px 0 6px;font-weight:900}
+.hero h1{font-size:clamp(28px,4.5vw,40px);line-height:1.2;letter-spacing:-.02em;margin:0 0 4px;font-weight:900}
 .hero .en-name{font-family:"Inter";font-weight:600;color:var(--muted);font-size:18px;letter-spacing:.02em}
-.hero .role{font-size:clamp(18px,2.6vw,24px);font-weight:700;margin:22px 0 14px}
+.hero .role{font-size:clamp(15px,2vw,17px);font-weight:600;color:var(--muted);margin:0}
+.hero-contact{margin-left:12px;font-size:14px;white-space:nowrap}
 .hero .role em{font-style:normal;color:var(--accent)}
 .hero p.lead{max-width:720px;color:var(--muted);font-size:16px;margin:0}
 .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
@@ -180,10 +181,10 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
   <div class="wrap">
     <a class="brand" href="#top">Hikaru Miyashita</a>
     <nav class="links">
-      <a href="#strengths"><span lang="ja">強み</span><span lang="en">Strengths</span></a>
-      <a href="#services"><span lang="ja">対応領域</span><span lang="en">Services</span></a>
       <a href="#experience"><span lang="ja">職務経歴</span><span lang="en">Experience</span></a>
       <a href="#skills"><span lang="ja">スキル</span><span lang="en">Skills</span></a>
+      <a href="#background"><span lang="ja">バックグラウンド</span><span lang="en">Background</span></a>
+      <a href="#services"><span lang="ja">対応領域</span><span lang="en">Services</span></a>
       <a href="#contact"><span lang="ja">お問い合わせ</span><span lang="en">Contact</span></a>
     </nav>
     <div class="toggles">
@@ -198,116 +199,16 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
 
   <!-- HERO -->
   <div class="hero">
-    <span class="eyebrow"><span lang="ja">業務委託・案件のご相談受付中</span><span lang="en">Open to freelance / contract work</span></span>
     <h1><span lang="ja">宮下 光</span><span lang="en">Hikaru Miyashita</span></h1>
-    <div class="en-name" lang="ja">Hikaru Miyashita</div>
-    <div class="role">
-      <span lang="ja"><em>AI/ML</em> × <em>フルスタック</em> エンジニア</span>
-      <span lang="en"><em>AI/ML</em> × <em>Full-stack</em> Engineer</span>
-    </div>
-    <p class="lead" lang="ja">
-      深層学習によるエッジ映像解析、LLMのセルフホスト基盤構築、大規模業務システムのマイグレーションまで。
-      論文を読み解いて実装に落とし込み、モデルからAPI・UI・CI/CDまでエンドツーエンドで届けます。福岡在住。
+    <p class="role">
+      <span lang="ja"><em>AI/ML</em> × <em>フルスタック</em> エンジニア ｜ 福岡 ｜ 論文から実装まで</span>
+      <span lang="en"><em>AI/ML</em> × <em>Full-stack</em> Engineer ｜ Fukuoka, Japan ｜ From paper to production</span>
+      <a class="hero-contact" href="#contact"><span lang="ja">ご相談はこちら →</span><span lang="en">Contact →</span></a>
     </p>
-    <p class="lead" lang="en">
-      From deep-learning video analytics on the edge and self-hosted LLM infrastructure to large-scale enterprise migrations.
-      I turn research papers into working systems and deliver end-to-end — model, API, UI and CI/CD. Based in Fukuoka, Japan.
-    </p>
-    <div class="cta">
-      <a class="btn btn-primary" href="#contact"><span lang="ja">お仕事のご相談</span><span lang="en">Get in touch</span> →</a>
-      <a class="btn btn-outline" href="#experience"><span lang="ja">職務経歴を見る</span><span lang="en">View experience</span></a>
-    </div>
-    <div class="facts">
-      <div class="fact"><b>7+</b><span lang="ja">年のソフトウェア開発経験</span><span lang="en">years in software development</span></div>
-      <div class="fact"><b>20+</b><span lang="ja">名規模の開発に参画</span><span lang="en">-member team projects</span></div>
-      <div class="fact"><b>550B</b><span lang="ja">パラメータLLMをセルフホスト</span><span lang="en">-param LLM self-hosted</span></div>
-      <div class="fact"><b>E2E</b><span lang="ja">論文 → モデル → 本番</span><span lang="en">paper → model → production</span></div>
-    </div>
   </div>
 
-  <!-- STRENGTHS -->
-  <section id="strengths">
-    <div class="sec-head">
-      <div class="kicker">Strengths</div>
-      <h2><span lang="ja">3つの強み</span><span lang="en">What I bring</span></h2>
-    </div>
-    <div class="grid-3">
-      <div class="card">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
-        <h3><span lang="ja">リアルタイム映像解析 / エッジAI</span><span lang="en">Real-time Vision / Edge AI</span></h3>
-        <p lang="ja">インスタンスセグメンテーション、多物体トラッキング、状態推定をGPU最適化して現場で動かすところまで。</p>
-        <p lang="en">Instance segmentation, multi-object tracking and state estimation — optimized on GPU and shipped to the edge.</p>
-        <ul>
-          <li>PyTorch / TensorRT / ONNX Runtime</li>
-          <li lang="ja">CUDA対応OpenCVで推論スキップ・高速化</li>
-          <li lang="en">CUDA OpenCV for frame skipping & speed-up</li>
-          <li lang="ja">ハンガリアン法による追跡・遮蔽対応</li>
-          <li lang="en">Hungarian-method tracking with occlusion handling</li>
-        </ul>
-      </div>
-      <div class="card">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="7" rx="2"/><rect x="2" y="14" width="20" height="7" rx="2"/><path d="M6 6.5h.01M6 17.5h.01"/></svg></div>
-        <h3><span lang="ja">LLMセルフホスト × AIエージェント</span><span lang="en">Self-hosted LLM × AI Agents</span></h3>
-        <p lang="ja">機密コードを外に出さず、自社GPUサーバ上のLLMとコーディングエージェントで開発を自動化。</p>
-        <p lang="en">Automating development with coding agents on in-house GPU servers — sensitive code never leaves the network.</p>
-        <ul>
-          <li lang="ja">vLLMで550B MoEモデル（NVFP4）を運用</li>
-          <li lang="en">550B MoE model (NVFP4) served with vLLM</li>
-          <li lang="ja">LiteLLMゲートウェイ＋監視基盤</li>
-          <li lang="en">LiteLLM gateway with monitoring</li>
-          <li lang="ja">VMスナップショットで長時間自律実行</li>
-          <li lang="en">VM snapshots for long-horizon autonomy</li>
-        </ul>
-      </div>
-      <div class="card">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-        <h3><span lang="ja">大規模業務システム / クラウド</span><span lang="en">Enterprise Systems / Cloud</span></h3>
-        <p lang="ja">公共・インフラ・小売・金融の基幹系。設計から実装、CI/CD、移行まで一貫して担当。</p>
-        <p lang="en">Core systems for public sector, utilities, retail and finance — design through implementation, CI/CD and migration.</p>
-        <ul>
-          <li>Java / Spring Boot / Angular / React</li>
-          <li>AWS EKS / Lambda / CodePipeline</li>
-          <li lang="ja">Java 11→21・Spring Boot 3 移行</li>
-          <li lang="en">Java 11→21, Spring Boot 3 migration</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICES -->
-  <section id="services">
-    <div class="sec-head">
-      <div class="kicker">Services</div>
-      <h2><span lang="ja">ご依頼いただける領域</span><span lang="en">How I can help</span></h2>
-      <p lang="ja">実績のある領域です。要件が固まっていない段階からのご相談も歓迎します。</p>
-      <p lang="en">Areas with a proven track record. Happy to help even before requirements are settled.</p>
-    </div>
-    <div class="services">
-      <div class="service"><div class="num">01</div><div>
-        <h4><span lang="ja">画像・映像AIの開発とGPU推論最適化</span><span lang="en">Vision AI & GPU inference optimization</span></h4>
-        <p lang="ja">検出・セグメンテーション・トラッキングのモデル開発、TensorRT等による高速化、エッジ端末への組み込み。</p>
-        <p lang="en">Detection / segmentation / tracking models, TensorRT acceleration, deployment to edge devices.</p>
-      </div></div>
-      <div class="service"><div class="num">02</div><div>
-        <h4><span lang="ja">社内LLM基盤・AIエージェント導入</span><span lang="en">Private LLM platforms & AI agents</span></h4>
-        <p lang="ja">オンプレGPUでのLLMセルフホスト、API互換ゲートウェイ、コーディングエージェントの安全な運用設計。</p>
-        <p lang="en">On-prem LLM hosting, API-compatible gateways, safe operation of coding agents.</p>
-      </div></div>
-      <div class="service"><div class="num">03</div><div>
-        <h4><span lang="ja">レガシーシステムのモダナイゼーション</span><span lang="en">Legacy modernization</span></h4>
-        <p lang="ja">Java / Spring のバージョン移行をOpenRewrite等で自動化。複数システムへ横展開できる手順を整備。</p>
-        <p lang="en">Automated Java / Spring upgrades with OpenRewrite and repeatable playbooks across systems.</p>
-      </div></div>
-      <div class="service"><div class="num">04</div><div>
-        <h4><span lang="ja">Webアプリ・API・クラウド構築</span><span lang="en">Web apps, APIs & cloud</span></h4>
-        <p lang="ja">React / TypeScript、Go / Java / Python のAPI、AWSサーバレス・コンテナ基盤、CI/CD。</p>
-        <p lang="en">React / TypeScript, APIs in Go / Java / Python, AWS serverless & containers, CI/CD.</p>
-      </div></div>
-    </div>
-  </section>
-
   <!-- EXPERIENCE -->
-  <section id="experience">
+  <section id="experience" style="border-top:none;padding-top:8px">
     <div class="sec-head">
       <div class="kicker">Experience</div>
       <h2><span lang="ja">職務経歴</span><span lang="en">Experience</span></h2>
@@ -729,6 +630,87 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
       <li><b>Mask R-CNN</b> (He et al., 2017)</li>
       <li><b>YOLOv5 / YOLOv8</b> (Ultralytics, 2020–2023)</li>
     </ul>
+  </section>
+
+  <!-- STRENGTHS -->
+  <section id="strengths">
+    <div class="sec-head">
+      <div class="kicker">Strengths</div>
+      <h2><span lang="ja">3つの強み</span><span lang="en">What I bring</span></h2>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+        <h3><span lang="ja">リアルタイム映像解析 / エッジAI</span><span lang="en">Real-time Vision / Edge AI</span></h3>
+        <p lang="ja">インスタンスセグメンテーション、多物体トラッキング、状態推定をGPU最適化して現場で動かすところまで。</p>
+        <p lang="en">Instance segmentation, multi-object tracking and state estimation — optimized on GPU and shipped to the edge.</p>
+        <ul>
+          <li>PyTorch / TensorRT / ONNX Runtime</li>
+          <li lang="ja">CUDA対応OpenCVで推論スキップ・高速化</li>
+          <li lang="en">CUDA OpenCV for frame skipping & speed-up</li>
+          <li lang="ja">ハンガリアン法による追跡・遮蔽対応</li>
+          <li lang="en">Hungarian-method tracking with occlusion handling</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="7" rx="2"/><rect x="2" y="14" width="20" height="7" rx="2"/><path d="M6 6.5h.01M6 17.5h.01"/></svg></div>
+        <h3><span lang="ja">LLMセルフホスト × AIエージェント</span><span lang="en">Self-hosted LLM × AI Agents</span></h3>
+        <p lang="ja">機密コードを外に出さず、自社GPUサーバ上のLLMとコーディングエージェントで開発を自動化。</p>
+        <p lang="en">Automating development with coding agents on in-house GPU servers — sensitive code never leaves the network.</p>
+        <ul>
+          <li lang="ja">vLLMで550B MoEモデル（NVFP4）を運用</li>
+          <li lang="en">550B MoE model (NVFP4) served with vLLM</li>
+          <li lang="ja">LiteLLMゲートウェイ＋監視基盤</li>
+          <li lang="en">LiteLLM gateway with monitoring</li>
+          <li lang="ja">VMスナップショットで長時間自律実行</li>
+          <li lang="en">VM snapshots for long-horizon autonomy</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        <h3><span lang="ja">大規模業務システム / クラウド</span><span lang="en">Enterprise Systems / Cloud</span></h3>
+        <p lang="ja">公共・インフラ・小売・金融の基幹系。設計から実装、CI/CD、移行まで一貫して担当。</p>
+        <p lang="en">Core systems for public sector, utilities, retail and finance — design through implementation, CI/CD and migration.</p>
+        <ul>
+          <li>Java / Spring Boot / Angular / React</li>
+          <li>AWS EKS / Lambda / CodePipeline</li>
+          <li lang="ja">Java 11→21・Spring Boot 3 移行</li>
+          <li lang="en">Java 11→21, Spring Boot 3 migration</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="sec-head">
+      <div class="kicker">Services</div>
+      <h2><span lang="ja">ご依頼いただける領域</span><span lang="en">How I can help</span></h2>
+      <p lang="ja">実績のある領域です。要件が固まっていない段階からのご相談も歓迎します。</p>
+      <p lang="en">Areas with a proven track record. Happy to help even before requirements are settled.</p>
+    </div>
+    <div class="services">
+      <div class="service"><div class="num">01</div><div>
+        <h4><span lang="ja">画像・映像AIの開発とGPU推論最適化</span><span lang="en">Vision AI & GPU inference optimization</span></h4>
+        <p lang="ja">検出・セグメンテーション・トラッキングのモデル開発、TensorRT等による高速化、エッジ端末への組み込み。</p>
+        <p lang="en">Detection / segmentation / tracking models, TensorRT acceleration, deployment to edge devices.</p>
+      </div></div>
+      <div class="service"><div class="num">02</div><div>
+        <h4><span lang="ja">社内LLM基盤・AIエージェント導入</span><span lang="en">Private LLM platforms & AI agents</span></h4>
+        <p lang="ja">オンプレGPUでのLLMセルフホスト、API互換ゲートウェイ、コーディングエージェントの安全な運用設計。</p>
+        <p lang="en">On-prem LLM hosting, API-compatible gateways, safe operation of coding agents.</p>
+      </div></div>
+      <div class="service"><div class="num">03</div><div>
+        <h4><span lang="ja">レガシーシステムのモダナイゼーション</span><span lang="en">Legacy modernization</span></h4>
+        <p lang="ja">Java / Spring のバージョン移行をOpenRewrite等で自動化。複数システムへ横展開できる手順を整備。</p>
+        <p lang="en">Automated Java / Spring upgrades with OpenRewrite and repeatable playbooks across systems.</p>
+      </div></div>
+      <div class="service"><div class="num">04</div><div>
+        <h4><span lang="ja">Webアプリ・API・クラウド構築</span><span lang="en">Web apps, APIs & cloud</span></h4>
+        <p lang="ja">React / TypeScript、Go / Java / Python のAPI、AWSサーバレス・コンテナ基盤、CI/CD。</p>
+        <p lang="en">React / TypeScript, APIs in Go / Java / Python, AWS serverless & containers, CI/CD.</p>
+      </div></div>
+    </div>
   </section>
 
   <!-- CONTACT -->
