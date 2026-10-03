@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>宮下 光 | AI/ML・フルスタックエンジニア</title>
+<meta name="description" content="福岡在住のAI/ML・フルスタックエンジニア。エッジAI映像解析、LLMセルフホスト基盤、Java/Springマイグレーション、AWS上の大規模業務システム開発。論文から実装まで対応します。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="宮下 光 | AI/ML・フルスタックエンジニア">
+<meta property="og:description" content="エッジAI映像解析 / LLMセルフホスト基盤 / 大規模業務システム。論文から実装まで。">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231f4fd8'/%3E%3Ctext x='16' y='22' font-family='Arial' font-weight='700' font-size='15' fill='white' text-anchor='middle'%3EHM%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f8fa; --surface:#ffffff; --surface-2:#f0f2f6;
+  --text:#14171f; --muted:#5b6475; --line:#e2e6ee;
+  --accent:#1f4fd8; --accent-soft:#e8eefc; --accent-2:#0e9f6e;
+  --shadow:0 1px 2px rgba(16,24,40,.04),0 4px 16px rgba(16,24,40,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0d1017; --surface:#151a24; --surface-2:#1c2230;
+    --text:#e8ebf2; --muted:#9aa3b5; --line:#262e3e;
+    --accent:#7aa2ff; --accent-soft:#1a2440; --accent-2:#34d399;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d1017; --surface:#151a24; --surface-2:#1c2230;
+  --text:#e8ebf2; --muted:#9aa3b5; --line:#262e3e;
+  --accent:#7aa2ff; --accent-soft:#1a2440; --accent-2:#34d399;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:"Inter","Noto Sans JP",system-ui,sans-serif;line-height:1.75;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+@media (max-width:600px){.wrap{padding:0 16px}}
+
+/* language switching */
+html[data-lang="ja"] [lang="en"]:not(html){display:none!important}
+html[data-lang="en"] [lang="ja"]:not(html){display:none!important}
+
+/* header */
+header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 85%,transparent);
+  backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:20px;height:60px}
+.brand{font-weight:800;letter-spacing:-.01em;color:var(--text)}
+.brand:hover{text-decoration:none}
+nav.links{display:flex;gap:18px;margin-left:auto;font-size:14px}
+nav.links a{color:var(--muted)}
+nav.links a:hover{color:var(--text);text-decoration:none}
+.toggles{display:flex;gap:6px}
+.btn-ghost{border:1px solid var(--line);background:var(--surface);color:var(--text);
+  border-radius:8px;padding:4px 10px;font:600 12px/1.6 "Inter",sans-serif;cursor:pointer}
+.btn-ghost:hover{border-color:var(--accent)}
+@media (max-width:760px){nav.links{display:none}.toggles{margin-left:auto}}
+
+/* hero */
+.hero{padding:88px 0 64px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--accent-2);
+  background:color-mix(in srgb,var(--accent-2) 12%,transparent);padding:4px 12px;border-radius:999px}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent-2)}
+.hero h1{font-size:clamp(34px,6vw,56px);line-height:1.15;letter-spacing:-.02em;margin:20px 0 6px;font-weight:900}
+.hero .en-name{font-family:"Inter";font-weight:600;color:var(--muted);font-size:18px;letter-spacing:.02em}
+.hero .role{font-size:clamp(18px,2.6vw,24px);font-weight:700;margin:22px 0 14px}
+.hero .role em{font-style:normal;color:var(--accent)}
+.hero p.lead{max-width:720px;color:var(--muted);font-size:16px;margin:0}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:10px;font-weight:700;font-size:15px}
+.btn:hover{text-decoration:none}
+.btn-primary{background:var(--accent);color:#fff}
+:root[data-theme="dark"] .btn-primary{color:#0d1017}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn-primary{color:#0d1017}}
+.btn-primary:hover{filter:brightness(1.08)}
+.btn-outline{border:1px solid var(--line);color:var(--text);background:var(--surface)}
+.btn-outline:hover{border-color:var(--accent)}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:48px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.fact b{display:block;font-size:26px;font-weight:800;letter-spacing:-.02em;font-family:"Inter"}
+.fact span{font-size:13px;color:var(--muted)}
+@media (max-width:760px){.facts{grid-template-columns:repeat(2,1fr)}}
+
+/* sections */
+section{padding:64px 0;border-top:1px solid var(--line)}
+.sec-head{margin-bottom:32px}
+.sec-head .kicker{font:500 12px "JetBrains Mono",monospace;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+.sec-head h2{font-size:clamp(24px,3.4vw,32px);margin:6px 0 0;letter-spacing:-.01em;font-weight:800}
+.sec-head p{color:var(--muted);margin:8px 0 0;max-width:720px}
+
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:860px){.grid-3{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;box-shadow:var(--shadow)}
+.card .ico{width:40px;height:40px;border-radius:10px;background:var(--accent-soft);color:var(--accent);
+  display:grid;place-items:center;margin-bottom:14px}
+.card h3{margin:0 0 8px;font-size:18px;line-height:1.45}
+.card p{margin:0;color:var(--muted);font-size:14.5px}
+.card ul{margin:12px 0 0;padding-left:18px;font-size:14px;color:var(--muted)}
+.card li{margin:3px 0}
+
+.services{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media (max-width:700px){.services{grid-template-columns:1fr}}
+.service{display:flex;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.service .num{font:700 13px "JetBrains Mono",monospace;color:var(--accent);padding-top:3px}
+.service h4{margin:0 0 4px;font-size:16px}
+.service p{margin:0;font-size:14px;color:var(--muted)}
+
+/* timeline */
+.timeline{position:relative}
+.job{display:grid;grid-template-columns:150px 1fr;gap:24px;padding:0 0 12px}
+@media (max-width:700px){.job{grid-template-columns:1fr;gap:6px}}
+.job .when{font:500 13px "JetBrains Mono",monospace;color:var(--muted);padding-top:20px}
+details.proj{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:4px}
+details.proj[open]{box-shadow:var(--shadow)}
+details.proj summary{list-style:none;cursor:pointer;padding:18px 22px}
+details.proj summary::-webkit-details-marker{display:none}
+.sum-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.proj h3{margin:0;font-size:17px;line-height:1.5}
+.proj .meta{font-size:13px;color:var(--muted);margin-top:4px}
+.chev{flex:none;width:22px;height:22px;color:var(--muted);transition:transform .2s;margin-top:2px}
+details[open] .chev{transform:rotate(180deg)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.tag{font-size:12px;padding:2px 9px;border-radius:6px;background:var(--surface-2);color:var(--text);border:1px solid var(--line)}
+.tag.hl{background:var(--accent-soft);color:var(--accent);border-color:transparent;font-weight:600}
+.proj-body{padding:0 22px 22px;font-size:14.5px}
+.proj-body h5{font-size:13px;color:var(--accent);margin:18px 0 6px;letter-spacing:.02em}
+.proj-body ul{margin:0;padding-left:18px}
+.proj-body li{margin:4px 0}
+.proj-body p{margin:6px 0}
+.callout{border-left:3px solid var(--accent-2);background:color-mix(in srgb,var(--accent-2) 8%,transparent);
+  padding:10px 14px;border-radius:0 8px 8px 0;margin-top:14px;font-size:14px}
+.label-group{font:600 12px "JetBrains Mono",monospace;color:var(--muted);letter-spacing:.06em;margin:28px 0 12px;text-transform:uppercase}
+
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media (max-width:700px){.skills{grid-template-columns:1fr}}
+.skill h4{margin:0 0 10px;font-size:15px}
+
+/* background */
+.bg-list{display:grid;gap:12px}
+.bg-item{display:grid;grid-template-columns:150px 1fr;gap:24px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 22px}
+@media (max-width:700px){.bg-item{grid-template-columns:1fr;gap:4px}}
+.bg-item .when{font:500 13px "JetBrains Mono",monospace;color:var(--muted)}
+.bg-item h4{margin:0 0 4px;font-size:16px}
+.bg-item p{margin:0;font-size:14px;color:var(--muted)}
+.papers{font-size:14px;color:var(--muted);columns:2;column-gap:32px;margin:0;padding-left:18px}
+@media (max-width:700px){.papers{columns:1}}
+.papers li{break-inside:avoid;margin-bottom:8px}
+.papers b{color:var(--text);font-weight:600}
+
+/* contact */
+.contact{background:linear-gradient(135deg,var(--accent) 0%,color-mix(in srgb,var(--accent) 60%,#7c3aed) 100%);
+  color:#fff;border-radius:20px;padding:48px;text-align:center}
+@media (max-width:600px){.contact{padding:32px 20px}}
+.contact h2{margin:0 0 10px;font-size:clamp(24px,3.4vw,32px)}
+.contact p{margin:0 auto;max-width:620px;opacity:.92}
+.contact .cta{justify-content:center}
+.contact .btn-primary{background:#fff;color:#1f2a44!important}
+.contact .btn-outline{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
+</style>
+</head>
+<body>
+<script>
+(function(){
+  var d=document.documentElement, lang='ja', theme=null;
+  try{lang=localStorage.getItem('lang')||((navigator.language||'ja').slice(0,2)==='ja'?'ja':'en');theme=localStorage.getItem('theme')}catch(e){}
+  d.setAttribute('data-lang',lang); if(theme) d.setAttribute('data-theme',theme);
+})();
+</script>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">Hikaru Miyashita</a>
+    <nav class="links">
+      <a href="#strengths"><span lang="ja">強み</span><span lang="en">Strengths</span></a>
+      <a href="#services"><span lang="ja">対応領域</span><span lang="en">Services</span></a>
+      <a href="#experience"><span lang="ja">職務経歴</span><span lang="en">Experience</span></a>
+      <a href="#skills"><span lang="ja">スキル</span><span lang="en">Skills</span></a>
+      <a href="#contact"><span lang="ja">お問い合わせ</span><span lang="en">Contact</span></a>
+    </nav>
+    <div class="toggles">
+      <button class="btn-ghost" id="langBtn" type="button" aria-label="Switch language"><span lang="ja">EN</span><span lang="en">日本語</span></button>
+      <button class="btn-ghost" id="themeBtn" type="button" aria-label="Toggle theme">◐</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="eyebrow"><span lang="ja">業務委託・案件のご相談受付中</span><span lang="en">Open to freelance / contract work</span></span>
+    <h1><span lang="ja">宮下 光</span><span lang="en">Hikaru Miyashita</span></h1>
+    <div class="en-name" lang="ja">Hikaru Miyashita</div>
+    <div class="role">
+      <span lang="ja"><em>AI/ML</em> × <em>フルスタック</em> エンジニア</span>
+      <span lang="en"><em>AI/ML</em> × <em>Full-stack</em> Engineer</span>
+    </div>
+    <p class="lead" lang="ja">
+      深層学習によるエッジ映像解析、LLMのセルフホスト基盤構築、大規模業務システムのマイグレーションまで。
+      論文を読み解いて実装に落とし込み、モデルからAPI・UI・CI/CDまでエンドツーエンドで届けます。福岡在住。
+    </p>
+    <p class="lead" lang="en">
+      From deep-learning video analytics on the edge and self-hosted LLM infrastructure to large-scale enterprise migrations.
+      I turn research papers into working systems and deliver end-to-end — model, API, UI and CI/CD. Based in Fukuoka, Japan.
+    </p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#contact"><span lang="ja">お仕事のご相談</span><span lang="en">Get in touch</span> →</a>
+      <a class="btn btn-outline" href="#experience"><span lang="ja">職務経歴を見る</span><span lang="en">View experience</span></a>
+    </div>
+    <div class="facts">
+      <div class="fact"><b>7+</b><span lang="ja">年のソフトウェア開発経験</span><span lang="en">years in software development</span></div>
+      <div class="fact"><b>20+</b><span lang="ja">名規模の開発に参画</span><span lang="en">-member team projects</span></div>
+      <div class="fact"><b>550B</b><span lang="ja">パラメータLLMをセルフホスト</span><span lang="en">-param LLM self-hosted</span></div>
+      <div class="fact"><b>E2E</b><span lang="ja">論文 → モデル → 本番</span><span lang="en">paper → model → production</span></div>
+    </div>
+  </div>
+
+  <!-- STRENGTHS -->
+  <section id="strengths">
+    <div class="sec-head">
+      <div class="kicker">Strengths</div>
+      <h2><span lang="ja">3つの強み</span><span lang="en">What I bring</span></h2>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+        <h3><span lang="ja">リアルタイム映像解析 / エッジAI</span><span lang="en">Real-time Vision / Edge AI</span></h3>
+        <p lang="ja">インスタンスセグメンテーション、多物体トラッキング、状態推定をGPU最適化して現場で動かすところまで。</p>
+        <p lang="en">Instance segmentation, multi-object tracking and state estimation — optimized on GPU and shipped to the edge.</p>
+        <ul>
+          <li>PyTorch / TensorRT / ONNX Runtime</li>
+          <li lang="ja">CUDA対応OpenCVで推論スキップ・高速化</li>
+          <li lang="en">CUDA OpenCV for frame skipping & speed-up</li>
+          <li lang="ja">ハンガリアン法による追跡・遮蔽対応</li>
+          <li lang="en">Hungarian-method tracking with occlusion handling</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="7" rx="2"/><rect x="2" y="14" width="20" height="7" rx="2"/><path d="M6 6.5h.01M6 17.5h.01"/></svg></div>
+        <h3><span lang="ja">LLMセルフホスト × AIエージェント</span><span lang="en">Self-hosted LLM × AI Agents</span></h3>
+        <p lang="ja">機密コードを外に出さず、自社GPUサーバ上のLLMとコーディングエージェントで開発を自動化。</p>
+        <p lang="en">Automating development with coding agents on in-house GPU servers — sensitive code never leaves the network.</p>
+        <ul>
+          <li lang="ja">vLLMで550B MoEモデル（NVFP4）を運用</li>
+          <li lang="en">550B MoE model (NVFP4) served with vLLM</li>
+          <li lang="ja">LiteLLMゲートウェイ＋監視基盤</li>
+          <li lang="en">LiteLLM gateway with monitoring</li>
+          <li lang="ja">VMスナップショットで長時間自律実行</li>
+          <li lang="en">VM snapshots for long-horizon autonomy</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        <h3><span lang="ja">大規模業務システム / クラウド</span><span lang="en">Enterprise Systems / Cloud</span></h3>
+        <p lang="ja">公共・インフラ・小売・金融の基幹系。設計から実装、CI/CD、移行まで一貫して担当。</p>
+        <p lang="en">Core systems for public sector, utilities, retail and finance — design through implementation, CI/CD and migration.</p>
+        <ul>
+          <li>Java / Spring Boot / Angular / React</li>
+          <li>AWS EKS / Lambda / CodePipeline</li>
+          <li lang="ja">Java 11→21・Spring Boot 3 移行</li>
+          <li lang="en">Java 11→21, Spring Boot 3 migration</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="sec-head">
+      <div class="kicker">Services</div>
+      <h2><span lang="ja">ご依頼いただける領域</span><span lang="en">How I can help</span></h2>
+      <p lang="ja">実績のある領域です。要件が固まっていない段階からのご相談も歓迎します。</p>
+      <p lang="en">Areas with a proven track record. Happy to help even before requirements are settled.</p>
+    </div>
+    <div class="services">
+      <div class="service"><div class="num">01</div><div>
+        <h4><span lang="ja">画像・映像AIの開発とGPU推論最適化</span><span lang="en">Vision AI & GPU inference optimization</span></h4>
+        <p lang="ja">検出・セグメンテーション・トラッキングのモデル開発、TensorRT等による高速化、エッジ端末への組み込み。</p>
+        <p lang="en">Detection / segmentation / tracking models, TensorRT acceleration, deployment to edge devices.</p>
+      </div></div>
+      <div class="service"><div class="num">02</div><div>
+        <h4><span lang="ja">社内LLM基盤・AIエージェント導入</span><span lang="en">Private LLM platforms & AI agents</span></h4>
+        <p lang="ja">オンプレGPUでのLLMセルフホスト、API互換ゲートウェイ、コーディングエージェントの安全な運用設計。</p>
+        <p lang="en">On-prem LLM hosting, API-compatible gateways, safe operation of coding agents.</p>
+      </div></div>
+      <div class="service"><div class="num">03</div><div>
+        <h4><span lang="ja">レガシーシステムのモダナイゼーション</span><span lang="en">Legacy modernization</span></h4>
+        <p lang="ja">Java / Spring のバージョン移行をOpenRewrite等で自動化。複数システムへ横展開できる手順を整備。</p>
+        <p lang="en">Automated Java / Spring upgrades with OpenRewrite and repeatable playbooks across systems.</p>
+      </div></div>
+      <div class="service"><div class="num">04</div><div>
+        <h4><span lang="ja">Webアプリ・API・クラウド構築</span><span lang="en">Web apps, APIs & cloud</span></h4>
+        <p lang="ja">React / TypeScript、Go / Java / Python のAPI、AWSサーバレス・コンテナ基盤、CI/CD。</p>
+        <p lang="en">React / TypeScript, APIs in Go / Java / Python, AWS serverless & containers, CI/CD.</p>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="sec-head">
+      <div class="kicker">Experience</div>
+      <h2><span lang="ja">職務経歴</span><span lang="en">Experience</span></h2>
+      <p lang="ja">各項目をクリックすると詳細を表示します。</p>
+      <p lang="en">Click a project to expand the details.</p>
+    </div>
+
+    <div class="timeline">
+
+      <div class="label-group"><span lang="ja">AI / ML</span><span lang="en">AI / ML</span></div>
+
+      <div class="job">
+        <div class="when"><span lang="ja">直近</span><span lang="en">Recent</span></div>
+        <details class="proj" open>
+          <summary>
+            <div class="sum-top"><div>
+              <h3><span lang="ja">カメラ映像からプロセス進行を自動認識する映像解析システム</span><span lang="en">Real-time video analytics that recognizes process progress from camera feeds</span></h3>
+              <div class="meta"><span lang="ja">フルスタック開発・AI/MLエンジニア</span><span lang="en">Full-stack & AI/ML Engineer</span></div>
+            </div><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="tags"><span class="tag hl">PyTorch</span><span class="tag hl">TensorRT</span><span class="tag hl">CUDA</span><span class="tag">OpenCV</span><span class="tag">ONNX Runtime</span><span class="tag">Go / Gin</span><span class="tag">React</span><span class="tag">WebSocket</span><span class="tag">GitHub Actions</span></div>
+          </summary>
+          <div class="proj-body">
+            <p lang="ja">カメラ映像のみから特定プロセスの進行をリアルタイムに自動認識。深層学習モデル、トラッキング、状態推定、集計データとの整合性検証、監視UIまでをエンドツーエンドで構築。</p>
+            <p lang="en">Recognizes the progress of a specific process in real time from camera video alone. Built end-to-end: deep-learning models, tracking, state estimation, consistency checks against aggregated data and a monitoring UI.</p>
+            <h5><span lang="ja">深層学習モデル</span><span lang="en">Deep learning</span></h5>
+            <ul lang="ja">
+              <li>インスタンスセグメンテーションで複数種類の対象物と作業者領域を検出。セマンティックセグメンテーションのヘッド設計・学習・推論最適化を担当</li>
+              <li>Albumentationsによるデータ拡張、COCO形式データセットの前処理・学習パイプラインを実装</li>
+              <li>TensorRT系ツールでGPU推論を最適化し、エッジ端末上の推論を高速化</li>
+            </ul>
+            <ul lang="en">
+              <li>Instance segmentation for multiple object types and worker regions; designed, trained and optimized a semantic-segmentation head</li>
+              <li>Albumentations augmentation and a COCO-format preprocessing / training pipeline</li>
+              <li>GPU inference optimization with TensorRT tooling for faster edge inference</li>
+            </ul>
+            <h5><span lang="ja">リアルタイム解析パイプライン</span><span lang="en">Real-time pipeline</span></h5>
+            <ul lang="ja">
+              <li>ハンガリアン法による多物体の対応付け・追跡。作業者による遮蔽・隠蔽・移動を考慮し、見えなくなった対象を誤削除しない状態管理</li>
+              <li>CUDA対応OpenCVのフレーム間差分で変化のないフレームの推論をスキップし、GPU計算量を削減</li>
+              <li>生産者-消費者パターンのマルチスレッド推論と、認識・集計・配信を分離したマルチプロセス構成</li>
+              <li>産業用カメラの入力制御、カメラキャリブレーションと幾何変換</li>
+              <li>検出イベント列から複数フェーズの進行を復元する状態機械を設計。位置情報が信頼できない条件下で、検出順序に基づき役割を分類する方式を考案</li>
+            </ul>
+            <ul lang="en">
+              <li>Hungarian-method multi-object association with occlusion-aware state management so hidden objects aren't dropped</li>
+              <li>Frame differencing on CUDA OpenCV to skip inference on unchanged frames and cut GPU load</li>
+              <li>Producer–consumer multithreaded inference; recognition, aggregation and delivery split into separate processes</li>
+              <li>Industrial camera control, calibration and geometric transforms</li>
+              <li>Designed a state machine that reconstructs multi-phase progress from detection events, classifying roles by detection order where positions are unreliable</li>
+            </ul>
+            <h5><span lang="ja">バックエンド / フロントエンド / MLOps</span><span lang="en">Backend / Frontend / MLOps</span></h5>
+            <ul lang="ja">
+              <li>Go（Gin + GORM）でレイヤードアーキテクチャのREST API、Swaggerで仕様自動生成</li>
+              <li>WebSocket + MessagePackによる認識結果のリアルタイム配信、React + TypeScript + Canvas（react-konva）の可視化UI</li>
+              <li>実データでのE2E回帰テストをGitHub Actionsでマトリクス実行。コンテナ化とCI/CD、MkDocsで英日バイリンガルドキュメント</li>
+            </ul>
+            <ul lang="en">
+              <li>Layered REST API in Go (Gin + GORM) with Swagger-generated specs</li>
+              <li>Real-time delivery over WebSocket + MessagePack; visualization UI in React + TypeScript + Canvas (react-konva)</li>
+              <li>E2E regression tests on real data, matrix-run in GitHub Actions; containerization, CI/CD and bilingual MkDocs documentation</li>
+            </ul>
+            <div class="callout"><span lang="ja">参照論文：RTMDet、CondInst、Dynamic Convolution、Mask R-CNN、YOLO系 — 論文の手法を理解した上でモデル構成を選定・改良。</span><span lang="en">Papers applied: RTMDet, CondInst, Dynamic Convolution, Mask R-CNN, YOLO — model design grounded in the literature.</span></div>
+          </div>
+        </details>
+      </div>
+
+      <div class="job">
+        <div class="when">2026.02 –</div>
+        <details class="proj">
+          <summary>
+            <div class="sum-top"><div>
+              <h3><span lang="ja">公共系業務システムのJava/Springマイグレーション ＋ 社内LLM基盤</span><span lang="en">Java/Spring migration for public-sector systems + in-house LLM platform</span></h3>
+              <div class="meta"><span lang="ja">バックエンドエンジニア（移行担当） / オンライン・バッチ計4システム</span><span lang="en">Backend Engineer (migration) / 4 online & batch systems</span></div>
+            </div><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="tags"><span class="tag hl">Java 11→21</span><span class="tag hl">Spring Boot 3</span><span class="tag hl">vLLM</span><span class="tag">OpenRewrite</span><span class="tag">Spring Batch 5</span><span class="tag">LiteLLM</span><span class="tag">Claude Code</span><span class="tag">PostgreSQL</span></div>
+          </summary>
+          <div class="proj-body">
+            <p lang="ja">Java 11 → 21、Spring Boot 2.x → 3.x、Spring Framework 5 → 6 への移行を、方針策定から自動変換、ビルド・動作検証まで一貫して担当。</p>
+            <p lang="en">Owned the upgrade from Java 11 → 21, Spring Boot 2.x → 3.x and Spring Framework 5 → 6 — from strategy through automated conversion, build and verification.</p>
+            <h5><span lang="ja">移行の自動化</span><span lang="en">Automated migration</span></h5>
+            <ul lang="ja">
+              <li>OpenRewriteの移行レシピで javax → jakarta 変換・非推奨APIの置換を自動適用</li>
+              <li>ソースのないバイナリJARにはEclipse Transformerでjakarta対応版を生成</li>
+              <li>Spring Batch 4 → 5 のAPI刷新に伴うバッチ書き換え、Spring Boot 3の設定・依存整合性の解決</li>
+              <li>差分レビューに集中できる移行フローを構築し、複数システムへ同一手順で横展開</li>
+            </ul>
+            <ul lang="en">
+              <li>OpenRewrite recipes for javax → jakarta and deprecated-API replacement</li>
+              <li>Eclipse Transformer to produce jakarta-compatible versions of source-less binary JARs</li>
+              <li>Rewrote batch jobs for Spring Batch 5; resolved Spring Boot 3 property and dependency changes</li>
+              <li>Review-focused migration flow, reusable across multiple systems</li>
+            </ul>
+            <h5><span lang="ja">AI活用：機密を守るLLMセルフホスト</span><span lang="en">AI: self-hosted LLMs for confidential code</span></h5>
+            <ul lang="ja">
+              <li>社内GPUサーバ2台にvLLMでNVIDIA Nemotron-3-Ultra 550B（MoE / NVFP4 / 256Kコンテキスト）、Kimi K2.6をセルフホスト</li>
+              <li>LiteLLMゲートウェイ（Anthropic API互換）で複数モデルを統合。PostgreSQL / Redis / Prometheusでキー管理・キャッシュ・利用監視</li>
+              <li>Claude Code CLIを専用VMで運用し、接続先を社内推論基盤に向けて機密コードを社外に出さずに、ビルドエラー解析 → 修正 → コミットまでを長時間自律実行</li>
+              <li>コンテナではなくVMを採用。スナップショット/ロールバックでOS・ミドルウェア・DB状態まで即時復元でき、エージェントの大胆な試行錯誤を可能に</li>
+            </ul>
+            <ul lang="en">
+              <li>Self-hosted NVIDIA Nemotron-3-Ultra 550B (MoE / NVFP4 / 256K context) and Kimi K2.6 on two in-house GPU servers with vLLM</li>
+              <li>LiteLLM gateway (Anthropic-API compatible) with PostgreSQL / Redis / Prometheus for keys, caching and usage monitoring</li>
+              <li>Ran Claude Code CLI in a dedicated VM against the in-house endpoint — long-horizon autonomous loops (build-error analysis → fix → commit) without code leaving the network</li>
+              <li>Chose VMs over containers: snapshots restore OS, middleware and DB state instantly, letting the agent experiment boldly</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div class="label-group"><span lang="ja">業務システム・Web・クラウド</span><span lang="en">Enterprise, Web & Cloud</span></div>
+
+      <div class="job">
+        <div class="when">2025.07 –</div>
+        <details class="proj">
+          <summary>
+            <div class="sum-top"><div>
+              <h3><span lang="ja">大手ガス会社向け 託送契約管理システム</span><span lang="en">Gas-transmission contract management for a major utility</span></h3>
+              <div class="meta"><span lang="ja">設計・開発 / 20名以上</span><span lang="en">Design & development / 20+ members</span></div>
+            </div><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="tags"><span class="tag hl">Angular</span><span class="tag hl">Spring Boot</span><span class="tag hl">AWS EKS</span><span class="tag">Kubernetes</span><span class="tag">CodePipeline</span><span class="tag">CodeBuild</span><span class="tag">EFS</span></div>
+          </summary>
+          <div class="proj-body">
+            <p lang="ja">ガス自由化により小売事業者が大手ガス会社の導管網を利用する「託送」の契約を管理する基幹システム。</p>
+            <p lang="en">Core system managing "wheeling" contracts, under which retailers use a major gas utility's pipeline network after market liberalization.</p>
+            <ul lang="ja">
+              <li>Angular（大規模開発向けにルーティング・DI・HTTPクライアントを標準装備）とSpring Boot（CoCで本質的なロジックに早期着手）を採用</li>
+              <li>機能単位のマイクロサービスをEKSの各Podで運用し、コンテナごとにチームをアサイン</li>
+              <li>GitHubへのpushから最大8コンテナを同時リリースするCI/CDをCodePipeline / CodeBuildで構築</li>
+              <li>環境ごとにAWSマルチアカウント、ログ出力用にEFSを各Podへマウント</li>
+            </ul>
+            <ul lang="en">
+              <li>Angular for large-scale consistency (built-in routing, DI, HTTP) and Spring Boot for convention-over-configuration speed</li>
+              <li>Feature-based microservices on EKS pods with a dedicated team per container</li>
+              <li>CI/CD with CodePipeline / CodeBuild releasing up to 8 containers simultaneously from a GitHub push</li>
+              <li>AWS multi-account per environment; EFS mounted on pods for persistent logs</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div class="job">
+        <div class="when">2024.07 –</div>
+        <details class="proj">
+          <summary>
+            <div class="sum-top"><div>
+              <h3><span lang="ja">小売業向け 受発注・在庫管理の基幹システム</span><span lang="en">Order & inventory management system for retail</span></h3>
+              <div class="meta"><span lang="ja">5名以下</span><span lang="en">Team of ≤5</span></div>
+            </div><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="tags"><span class="tag hl">GraphQL</span><span class="tag hl">Python</span><span class="tag">Graphene</span><span class="tag">Flask</span><span class="tag">React</span><span class="tag">TypeScript</span></div>
+          </summary>
+          <div class="proj-body">
+            <ul lang="ja">
+              <li>発注・受注・出荷・入荷を一元管理し、請求書などの帳票を自動出力</li>
+              <li>エンドポイント増加を見越してGraphQL（Graphene）を採用。スキーマとリゾルバを分離し、既存に影響なく拡張できる構造に</li>
+              <li>スキーマ駆動開発で、GraphQLスキーマからTypeScriptの型を自動生成し型安全なフルスタック環境を構築</li>
+              <li>useMemo / useCallbackによる再レンダリング抑制、カスタムフック、ESLintで品質を担保</li>
+            </ul>
+            <ul lang="en">
+              <li>Unified ordering, receiving, shipping and inventory with automatic invoice generation</li>
+              <li>GraphQL (Graphene) with schema / resolver separation for non-breaking growth</li>
+              <li>Schema-driven development: TypeScript types generated from the GraphQL schema for end-to-end type safety</li>
+              <li>Render optimization with useMemo / useCallback, custom hooks, ESLint</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div class="job">
+        <div class="when">2024.12 – 2025.02</div>
+        <details class="proj">
+          <summary>
+            <div class="sum-top"><div>
+              <h3><span lang="ja">複数ECサイト向け 在庫引き当てAPI ／ 夜間バッチ</span><span lang="en">Inventory allocation API for multiple e-commerce sites / nightly batch</span></h3>
+              <div class="meta"><span lang="ja">基本設計〜実装</span><span lang="en">Design to implementation</span></div>
+            </div><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="tags"><span class="tag hl">AWS Lambda</span><span class="tag hl">Spring</span><span class="tag">API Gateway</span><span class="tag">Spring Batch</span><span class="tag">S3</span></div>
+          </summary>
+          <div class="proj-body">
+            <ul lang="ja">
+              <li>各ECサイトでの受注時に呼び出され在庫数をリアルタイムに整合させるAPIを、Spring + Lambda + API Gatewayのサーバレス構成で開発</li>
+              <li>DIでインターフェースと実装を分離し、テスト容易性と保守性を確保。高頻度アクセスを想定したステートレス設計</li>
+              <li>Spring BatchでS3上の大量HTMLを整形する夜間バッチを単独で実装。Chunk処理・並列化で高速化、リトライ・ログにも対応</li>
+            </ul>
+            <ul lang="en">
+              <li>Serverless (Spring + Lambda + API Gateway) API that keeps stock consistent across stores on every order</li>
+              <li>DI-based interface/implementation split for testability; stateless design for high-frequency traffic</li>
+              <li>Solo-built Spring Batch nightly job cleaning large volumes of HTML on S3, with chunked parallel processing and retries</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div class="job">
+        <div class="when">2024.10 –</div>
+        <details class="proj">
+          <summary>
+            <div class="sum-top"><div>
+              <h3><span lang="ja">小売業向けECサイト（SSR / PWA）</span><span lang="en">Retail e-commerce site (SSR / PWA)</span></h3>
+              <div class="meta"><span lang="ja">基本設計・自動テスト</span><span lang="en">Design & automated testing</span></div>
+            </div><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="tags"><span class="tag hl">Remix</span><span class="tag hl">React</span><span class="tag">Prisma</span><span class="tag">TypeScript</span><span class="tag">Vitest</span><span class="tag">Tailwind</span></div>
+          </summary>
+          <div class="proj-body">
+            <ul lang="ja">
+              <li>Remix + ReactのSSRで初期描画速度とSEOを両立。ハイドレーションでモバイルの描画負荷を軽減</li>
+              <li>PWAとしてService Workerでキャッシュ制御し、オフラインでも操作可能に。単一コードベースでマルチデバイス対応</li>
+            </ul>
+            <ul lang="en">
+              <li>SSR with Remix + React for fast first paint and SEO; hydration to reduce mobile rendering cost</li>
+              <li>PWA with Service Worker caching for offline use; one codebase for all devices</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div class="job">
+        <div class="when">2024.07 – 2024.10</div>
+        <details class="proj">
+          <summary>
+            <div class="sum-top"><div>
+              <h3><span lang="ja">基幹システムの帳票出力API</span><span lang="en">Report-generation API for a core system</span></h3>
+              <div class="meta"><span lang="ja">リーダー（タスク・スケジュール管理）</span><span lang="en">Lead (task & schedule management)</span></div>
+            </div><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="tags"><span class="tag hl">ASP.NET Core</span><span class="tag">C#</span></div>
+          </summary>
+          <div class="proj-body">
+            <ul lang="ja"><li>PDFライブラリの制約からASP.NET Coreを選定し、PDF帳票をリアルタイム生成するステートレスAPIを開発。帳票フォーマット定義と動的データ差し込みで帳票作成を自動化</li></ul>
+            <ul lang="en"><li>Chose ASP.NET Core to fit the PDF library and built a stateless API generating PDF reports on demand with templated dynamic data</li></ul>
+          </div>
+        </details>
+      </div>
+
+      <div class="job">
+        <div class="when">2023.09 – 2024.06</div>
+        <details class="proj">
+          <summary>
+            <div class="sum-top"><div>
+              <h3><span lang="ja">半導体製造部品の法人向けECサイト</span><span lang="en">B2B e-commerce for semiconductor equipment parts</span></h3>
+              <div class="meta"><span lang="ja">基本設計・詳細設計・製造</span><span lang="en">Basic / detailed design, implementation</span></div>
+            </div><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="tags"><span class="tag hl">Java</span><span class="tag hl">Spring</span><span class="tag">Hibernate</span><span class="tag">React</span><span class="tag">TypeScript</span></div>
+          </summary>
+          <div class="proj-body">
+            <ul lang="ja">
+              <li>購入済み本体に合わせて付随部品のラインナップを表示する法人向けEC</li>
+              <li>詳細設計書（Bean定義・テーブル構成・処理フロー）を作成し製造まで担当。DIとモック差し替えでテストを容易に</li>
+            </ul>
+            <ul lang="en">
+              <li>B2B store that tailors the parts catalog to the equipment each customer owns</li>
+              <li>Wrote detailed designs (beans, tables, action flows) and implemented them; DI with mocks for easy testing</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div class="job">
+        <div class="when">2023.08 – 2024.02</div>
+        <details class="proj">
+          <summary>
+            <div class="sum-top"><div>
+              <h3><span lang="ja">リアルタイムライブ配信サービス</span><span lang="en">Real-time live streaming service</span></h3>
+              <div class="meta"><span lang="ja">開発・リーダー</span><span lang="en">Developer & Lead</span></div>
+            </div><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="tags"><span class="tag hl">Go</span><span class="tag">Gin</span><span class="tag">GORM</span><span class="tag">Next.js</span><span class="tag">Docker</span><span class="tag">Agora</span></div>
+          </summary>
+          <div class="proj-body">
+            <ul lang="ja"><li>Go（Gin + GORM）で約10本のAPIをDocker上に構築、Next.jsでフロント、配信基盤にAgoraを採用</li></ul>
+            <ul lang="en"><li>About 10 Go (Gin + GORM) APIs on Docker, Next.js frontend, Agora for streaming</li></ul>
+          </div>
+        </details>
+      </div>
+
+      <div class="job">
+        <div class="when">2022.11 – 2023.09</div>
+        <details class="proj">
+          <summary>
+            <div class="sum-top"><div>
+              <h3><span lang="ja">社内システム・オンプレ基盤の設計構築</span><span lang="en">Internal systems & on-prem infrastructure</span></h3>
+              <div class="meta"><span lang="ja">開発・リーダー / 設計〜統合テスト</span><span lang="en">Developer & Lead / design to integration testing</span></div>
+            </div><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="tags"><span class="tag hl">ASP.NET Core</span><span class="tag hl">DDD / TDD</span><span class="tag">Spring Security</span><span class="tag">SAML SSO</span><span class="tag">PostgreSQL</span><span class="tag">Tomcat</span><span class="tag">nginx</span></div>
+          </summary>
+          <div class="proj-body">
+            <ul lang="ja">
+              <li>ASP.NET CoreでDDD・SOLID原則に沿ったAPIを設計。Moq + xUnitで単体テストを自動化し、TDDで機能を構築</li>
+              <li>Spring SecurityでSAML認証のSSOフローを構築、Struts2による社内システム開発</li>
+              <li>ネットワーク設計から参画し、Linux + TomcatのWeb/DBサーバをオンプレ構築。PostgreSQLのレプリケーション、rsync + cronで差分バックアップ</li>
+              <li>ビジネス側の決裁者との調整・交渉も担当</li>
+            </ul>
+            <ul lang="en">
+              <li>DDD / SOLID APIs in ASP.NET Core with Moq + xUnit, built test-first</li>
+              <li>SAML SSO with Spring Security; internal system on Struts2</li>
+              <li>On-prem Linux + Tomcat web/DB servers from network design up; PostgreSQL replication, rsync + cron backups</li>
+              <li>Negotiated directly with business decision-makers</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div class="job">
+        <div class="when">2022.05 – 2022.10</div>
+        <details class="proj">
+          <summary>
+            <div class="sum-top"><div>
+              <h3><span lang="ja">決済サービスのAPI刷新（サーバレス移行）</span><span lang="en">Payment-service API overhaul (serverless migration)</span></h3>
+              <div class="meta"><span lang="ja">開発 / 実装・テスト</span><span lang="en">Developer / implementation & testing</span></div>
+            </div><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="tags"><span class="tag hl">Serverless Framework</span><span class="tag hl">TypeScript</span><span class="tag">TypeORM</span><span class="tag">Aurora Serverless</span><span class="tag">C# / EF Core</span></div>
+          </summary>
+          <div class="proj-body">
+            <ul lang="ja"><li>急成長するBtoB決済サービスのスパイクアクセスに備え、Express製APIをServerless Framework + Aurora Serverlessへ移行。TypeScript + TypeORMで内部APIを開発、C#（EF Core）のバックエンド改修も担当</li></ul>
+            <ul lang="en"><li>Migrated Express APIs to Serverless Framework + Aurora Serverless to absorb traffic spikes at a fast-growing B2B payment service; TypeScript + TypeORM, plus C# (EF Core) backend changes</li></ul>
+          </div>
+        </details>
+      </div>
+
+      <div class="job">
+        <div class="when">2020.07 – 2022.03</div>
+        <details class="proj">
+          <summary>
+            <div class="sum-top"><div>
+              <h3><span lang="ja">社内業務アプリ・AWSデータ基盤の構築運用</span><span lang="en">Internal apps & AWS data platform</span></h3>
+              <div class="meta"><span lang="ja">設計・開発</span><span lang="en">Design & development</span></div>
+            </div><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="tags"><span class="tag hl">AWS</span><span class="tag">Lambda</span><span class="tag">Redshift</span><span class="tag">Aurora</span><span class="tag">CDK</span><span class="tag">NestJS</span><span class="tag">Java / C#</span></div>
+          </summary>
+          <div class="proj-body">
+            <ul lang="ja">
+              <li>Excel作業をシステム化する業務アプリ（S3 + API Gateway + Lambda + Aurora Serverless）。フロント連携はJava、他システム連携はASP.NET Core</li>
+              <li>S3へのput をトリガーにRedshiftへCOPYするアップロード機構を設計・構築</li>
+              <li>Redshift / Auroraの管理とデータ抽出（COPY / UNLOAD、権限・インデックス設定）、Linux cronジョブの保守</li>
+              <li>NestJSによる園児の体調管理アプリのAPI開発</li>
+            </ul>
+            <ul lang="en">
+              <li>Internal app replacing Excel workflows (S3 + API Gateway + Lambda + Aurora Serverless); Java and ASP.NET Core APIs</li>
+              <li>Designed an S3-triggered pipeline loading uploaded files into Redshift via COPY</li>
+              <li>Redshift / Aurora administration and data extraction; maintained Linux cron jobs</li>
+              <li>NestJS APIs for a childcare health-tracking app</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div class="job">
+        <div class="when">2019.04 – 2020.06</div>
+        <details class="proj">
+          <summary>
+            <div class="sum-top"><div>
+              <h3><span lang="ja">保険会社向け 入院履歴登録システム</span><span lang="en">Hospitalization-record system for an insurer</span></h3>
+              <div class="meta"><span lang="ja">開発</span><span lang="en">Developer</span></div>
+            </div><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="tags"><span class="tag hl">Node.js</span><span class="tag">Express</span><span class="tag">PostgreSQL</span><span class="tag">jQuery</span><span class="tag">Docker</span></div>
+          </summary>
+          <div class="proj-body">
+            <ul lang="ja"><li>Node.js / ExpressでRESTful APIを新規開発し、PostgreSQLでデータ永続化。Dockerで開発〜デプロイを自動化</li></ul>
+            <ul lang="en"><li>New RESTful APIs in Node.js / Express with PostgreSQL; Docker-based dev-to-deploy automation</li></ul>
+          </div>
+        </details>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="sec-head">
+      <div class="kicker">Skills</div>
+      <h2><span lang="ja">技術スタック</span><span lang="en">Tech stack</span></h2>
+      <p lang="ja">言語が変わっても本質は同じ、という考えで幅広い環境に対応してきました。</p>
+      <p lang="en">The fundamentals carry across languages — I've worked across a wide range of stacks.</p>
+    </div>
+    <div class="skills">
+      <div class="card skill"><h4>AI / ML</h4><div class="tags">
+        <span class="tag hl">PyTorch</span><span class="tag hl">TensorRT</span><span class="tag">TorchVision</span><span class="tag">ONNX Runtime</span><span class="tag">OpenCV (CUDA)</span><span class="tag">CuPy</span><span class="tag">Albumentations</span><span class="tag">SciPy</span><span class="tag">scikit-learn</span><span class="tag">XGBoost</span><span class="tag">Rerun SDK</span></div></div>
+      <div class="card skill"><h4>LLM / AI Agents</h4><div class="tags">
+        <span class="tag hl">vLLM</span><span class="tag hl">Claude Code</span><span class="tag">LiteLLM</span><span class="tag">Prometheus</span><span class="tag">Redis</span><span class="tag">GPU Server Ops</span></div></div>
+      <div class="card skill"><h4><span lang="ja">言語</span><span lang="en">Languages</span></h4><div class="tags">
+        <span class="tag hl">Python</span><span class="tag hl">Java</span><span class="tag hl">Go</span><span class="tag hl">TypeScript</span><span class="tag">C++</span><span class="tag">C#</span><span class="tag">C</span><span class="tag">SQL</span><span class="tag">VBA</span></div></div>
+      <div class="card skill"><h4><span lang="ja">バックエンド</span><span lang="en">Backend</span></h4><div class="tags">
+        <span class="tag hl">Spring Boot</span><span class="tag">Spring Batch</span><span class="tag">Spring Security</span><span class="tag">Gin / GORM</span><span class="tag">ASP.NET Core</span><span class="tag">Flask / Graphene</span><span class="tag">Node.js / Express</span><span class="tag">NestJS</span><span class="tag">GraphQL</span><span class="tag">WebSocket</span></div></div>
+      <div class="card skill"><h4><span lang="ja">フロントエンド</span><span lang="en">Frontend</span></h4><div class="tags">
+        <span class="tag hl">React</span><span class="tag">Angular</span><span class="tag">Next.js</span><span class="tag">Remix</span><span class="tag">Vite</span><span class="tag">Tailwind</span><span class="tag">react-konva</span><span class="tag">PWA</span></div></div>
+      <div class="card skill"><h4><span lang="ja">クラウド・インフラ</span><span lang="en">Cloud & Infra</span></h4><div class="tags">
+        <span class="tag hl">AWS</span><span class="tag">EKS / Kubernetes</span><span class="tag">Lambda</span><span class="tag">API Gateway</span><span class="tag">CodePipeline</span><span class="tag">Aurora / Redshift</span><span class="tag">Docker</span><span class="tag">GitHub Actions</span><span class="tag">Linux</span><span class="tag">PostgreSQL</span></div></div>
+    </div>
+  </section>
+
+  <!-- BACKGROUND -->
+  <section id="background">
+    <div class="sec-head">
+      <div class="kicker">Background</div>
+      <h2><span lang="ja">バックグラウンド</span><span lang="en">Background</span></h2>
+      <p lang="ja">数理モデルのアカデミックバックグラウンドを持ち、論文の理解から実装まで一人で行えます。現在はGoroutineの理解をきっかけにCPU/GPUアーキテクチャ、Domain Specific Architecture（DSA）を学習中です。</p>
+      <p lang="en">An academic background in mathematical modeling lets me go from paper to implementation on my own. I'm currently studying CPU/GPU architecture and Domain Specific Architectures — a curiosity that started with Go's goroutines.</p>
+    </div>
+    <div class="bg-list">
+      <div class="bg-item"><div class="when">2024.09 – 2024.12</div><div>
+        <h4><span lang="ja">クアッドコプタのPID自律制御（組み込み）</span><span lang="en">PID flight control for a quadcopter (embedded)</span></h4>
+        <p lang="ja">M5StampFlyを題材に、回路図・ICデータシートを解析し、C++でモーター制御・姿勢制御をオブジェクト指向設計。HALの設計指針を学びマイコン制御をパターン化。</p>
+        <p lang="en">On M5StampFly: read schematics and IC datasheets, designed motor and attitude control in object-oriented C++, and applied HAL patterns.</p>
+      </div></div>
+      <div class="bg-item"><div class="when">2016.04 – 2018.03</div><div>
+        <h4><span lang="ja">アクチュアリー（フランス系外資生命保険会社・東京）</span><span lang="en">Actuary — French-owned life insurer, Tokyo</span></h4>
+        <p lang="ja">保険商品設計と保険料・責任準備金の算定モデルを構築。C++で基数計算アルゴリズムを実装し、VBA・Pythonで定型業務を約30%削減。</p>
+        <p lang="en">Built premium and reserve models for life and medical products; implemented commutation calculations in C++ and cut routine work by ~30% with VBA and Python.</p>
+      </div></div>
+      <div class="bg-item"><div class="when"><span lang="ja">学生時代</span><span lang="en">University</span></div><div>
+        <h4><span lang="ja">機械学習による渋滞予測 / FPGA</span><span lang="en">Traffic-congestion prediction with ML / FPGA</span></h4>
+        <p lang="ja">交通量・気象・時間帯などからランダムフォレスト・XGBoostで渋滞発生を予測し、特徴量の寄与を可視化。C++による数理モデル研究、FPGAの経験あり。</p>
+        <p lang="en">Predicted congestion from traffic, weather and time features with random forests and XGBoost, with feature-importance analysis. Mathematical modeling in C++ and FPGA experience.</p>
+      </div></div>
+    </div>
+
+    <div class="label-group"><span lang="ja">実装に活用した主な論文</span><span lang="en">Papers applied in production</span></div>
+    <ul class="papers">
+      <li><b>RTMDet</b> — An Empirical Study of Designing Real-Time Object Detectors (Lyu et al., 2022)</li>
+      <li><b>CondInst</b> — Conditional Convolutions for Instance Segmentation (Tian et al., ECCV 2020)</li>
+      <li><b>Dynamic Convolution</b> — Attention over Convolution Kernels (Chen et al., CVPR 2020)</li>
+      <li><b>Mask R-CNN</b> (He et al., 2017)</li>
+      <li><b>YOLOv5 / YOLOv8</b> (Ultralytics, 2020–2023)</li>
+    </ul>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" style="border-top:none">
+    <div class="contact">
+      <h2><span lang="ja">お仕事のご相談はこちら</span><span lang="en">Let's work together</span></h2>
+      <p lang="ja">AI/MLの実装、LLM基盤の導入、システム開発・移行など、お気軽にご連絡ください。</p>
+      <p lang="en">AI/ML implementation, private LLM platforms, system development or migration — feel free to reach out.</p>
+      <div class="cta">
+        <a class="btn btn-primary" id="mailBtn" href="mailto:hikakin0706@gmail.com"><span lang="ja">メールで相談する</span><span lang="en">Email me</span></a>
+        <a class="btn btn-outline" href="https://github.com/hikaru0706" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <p style="margin-top:18px;font-size:15px">✉ hikakin0706@gmail.com</p>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer>© <span id="yr">2026</span> Hikaru Miyashita</footer>
+
+<script>
+(function(){
+  var d=document.documentElement;
+  function save(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  document.getElementById('langBtn').onclick=function(){
+    var l=d.getAttribute('data-lang')==='ja'?'en':'ja'; d.setAttribute('data-lang',l); save('lang',l);
+  };
+  document.getElementById('themeBtn').onclick=function(){
+    var cur=d.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+    var t=cur==='dark'?'light':'dark'; d.setAttribute('data-theme',t); save('theme',t);
+  };
+  document.getElementById('yr').textContent=new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
