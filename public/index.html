@@ -170,6 +170,14 @@ details[open] .chev{transform:rotate(180deg)}
 .dive p{margin:0;font-size:14px;color:var(--muted)}
 .dive p b{color:var(--text);font-weight:600}
 
+/* youtube */
+.yt{display:flex;gap:18px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 24px;box-shadow:var(--shadow);color:var(--text)}
+.yt:hover{text-decoration:none;border-color:#e62117}
+.yt-ico{flex:none;width:48px;height:48px;border-radius:12px;background:#e62117;color:#fff;display:grid;place-items:center}
+.yt h3{margin:0 0 6px;font-size:17px}
+.yt-arrow{color:var(--muted);font-weight:400}
+.yt p{margin:0;font-size:14.5px;color:var(--muted)}
+
 /* contact */
 .contact{background:linear-gradient(135deg,var(--accent) 0%,color-mix(in srgb,var(--accent) 60%,#7c3aed) 100%);
   color:#fff;border-radius:20px;padding:48px;text-align:center}
@@ -201,6 +209,7 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
       <a href="#strengths"><span lang="ja">強み</span><span lang="en">Strengths</span></a>
       <a href="#skills"><span lang="ja">スキル</span><span lang="en">Skills</span></a>
       <a href="#background"><span lang="ja">バックグラウンド</span><span lang="en">Background</span></a>
+      <a href="#youtube">YouTube</a>
       <a href="#services"><span lang="ja">対応領域</span><span lang="en">Services</span></a>
       <a href="#contact"><span lang="ja">お問い合わせ</span><span lang="en">Contact</span></a>
     </nav>
@@ -718,6 +727,22 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
       <li><b>Mask R-CNN</b> (He et al., 2017)</li>
       <li><b>YOLOv5 / YOLOv8</b> (Ultralytics, 2020–2023)</li>
     </ul>
+  </section>
+
+  <!-- YOUTUBE -->
+  <section id="youtube">
+    <div class="sec-head">
+      <div class="kicker">YouTube</div>
+      <h2><span lang="ja">YouTube</span><span lang="en">YouTube</span></h2>
+    </div>
+    <a class="yt" href="https://www.youtube.com/@miyashitahikaru1952" target="_blank" rel="noopener">
+      <div class="yt-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg></div>
+      <div>
+        <h3>M Hikary <span class="yt-arrow">↗</span></h3>
+        <p lang="ja">キックボクシングの練習記録を発信しています。AIで被弾の原因を分析したり、ハイスピードカメラでパンチの速度を測ったりと、技術を使って課題を見つけて改善する過程も公開しています。</p>
+        <p lang="en">Kickboxing training logs — including using AI to analyze why I got hit and measuring punch speed with a high-speed camera, applying tech to find and fix weaknesses.</p>
+      </div>
+    </a>
   </section>
 
   <!-- SERVICES -->
