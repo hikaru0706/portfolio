@@ -198,6 +198,18 @@ details[open] .chev{transform:rotate(180deg)}
 .yt-arrow{color:var(--muted);font-weight:400}
 .yt p{margin:0;font-size:14.5px;color:var(--muted)}
 
+/* story */
+.story{position:relative;display:grid;gap:14px;margin-bottom:36px}
+.story::before{content:"";position:absolute;left:15px;top:20px;bottom:20px;width:2px;background:var(--line)}
+.step{position:relative;display:flex;gap:16px;align-items:flex-start}
+.step .dot{flex:none;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font:700 14px "Inter",sans-serif;z-index:1}
+:root[data-theme="dark"] .step .dot{color:#0d1017}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .step .dot{color:#0d1017}}
+.step > div:last-child{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 20px}
+.step h3{margin:0 0 6px;font-size:16px}
+.step p{margin:0;font-size:14.5px;color:var(--muted)}
+.step p b{color:var(--text);font-weight:600}
+
 /* contact */
 .contact{background:linear-gradient(135deg,var(--accent) 0%,color-mix(in srgb,var(--accent) 60%,#7c3aed) 100%);
   color:#fff;border-radius:20px;padding:48px;text-align:center}
@@ -258,6 +270,33 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
     <div class="sec-head">
       <div class="kicker">Experience</div>
       <h2><span lang="ja">職務経歴</span><span lang="en">Experience</span></h2>
+    </div>
+
+    <div class="story">
+      <div class="step">
+        <div class="dot">1</div>
+        <div>
+          <h3><span lang="ja">アクチュアリー（外資系生命保険会社・東京）</span><span lang="en">Actuary — foreign-owned life insurer, Tokyo</span></h3>
+          <p lang="ja">保険商品の設計と保険料・責任準備金の算定に従事。生命保険・再保険の数理が得意分野で、<b>リスクの定量化は肌感覚で理解しています</b>。経済価値ベースのバランスシート（資産・負債の時価評価）の考え方にも通じています。数値計算はC++・VBA・Pythonで自ら実装し、定型業務を約30%削減しました。</p>
+          <p lang="en">Product design and premium / reserve calculation. Life insurance and reinsurance mathematics are my specialty — <b>I understand risk quantification intuitively</b>, including economic-value-based balance sheets (market-consistent valuation of assets and liabilities). Implemented the numerics myself in C++, VBA and Python, cutting routine work by ~30%.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="dot">2</div>
+        <div>
+          <h3><span lang="ja">Amazon（物流）</span><span lang="en">Amazon — Logistics</span></h3>
+          <p lang="ja">Amazonに移り、物流の現場に携わりました。</p>
+          <p lang="en">Moved to Amazon and worked in logistics operations.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="dot">3</div>
+        <div>
+          <h3><span lang="ja">福岡でエンジニアとして独り立ち</span><span lang="en">Starting out on my own as an engineer in Fukuoka</span></h3>
+          <p lang="ja">ビジネスの道を変え、福岡で一人で仕事を探すところからエンジニアとしてのキャリアを始めました。以降の案件は以下のとおりです。</p>
+          <p lang="en">I changed course and began my engineering career in Fukuoka, finding work on my own. The projects below followed.</p>
+        </div>
+      </div>
     </div>
 
     <div class="timeline">
@@ -733,11 +772,6 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
         <h4><span lang="ja">クアッドコプタのPID自律制御（組み込み）</span><span lang="en">PID flight control for a quadcopter (embedded)</span></h4>
         <p lang="ja">M5StampFlyを題材に、回路図・ICデータシートを解析し、C++でモーター制御・姿勢制御をオブジェクト指向設計。HALの設計指針を学びマイコン制御をパターン化。</p>
         <p lang="en">On M5StampFly: read schematics and IC datasheets, designed motor and attitude control in object-oriented C++, and applied HAL patterns.</p>
-      </div></div>
-      <div class="bg-item"><div>
-        <h4><span lang="ja">アクチュアリー（フランス系外資生命保険会社・東京）</span><span lang="en">Actuary — French-owned life insurer, Tokyo</span></h4>
-        <p lang="ja">保険商品設計と保険料・責任準備金の算定モデルを構築。C++で基数計算アルゴリズムを実装し、VBA・Pythonで定型業務を約30%削減。</p>
-        <p lang="en">Built premium and reserve models for life and medical products; implemented commutation calculations in C++ and cut routine work by ~30% with VBA and Python.</p>
       </div></div>
       <div class="bg-item"><div>
         <h4><span lang="ja">学生時代：機械学習による渋滞予測 / FPGA</span><span lang="en">University: traffic-congestion prediction with ML / FPGA</span></h4>
