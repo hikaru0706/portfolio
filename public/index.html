@@ -156,6 +156,20 @@ details[open] .chev{transform:rotate(180deg)}
 .papers li{break-inside:avoid;margin-bottom:8px}
 .papers b{color:var(--text);font-weight:600}
 
+/* deep dives */
+.dives{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media (max-width:760px){.dives{grid-template-columns:1fr}}
+.dive{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow)}
+.dive .area{font:600 11px "JetBrains Mono",monospace;color:var(--accent);letter-spacing:.06em;text-transform:uppercase}
+.dive h3{margin:4px 0 10px;font-size:16px;line-height:1.5}
+.dive .ba{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;margin-bottom:10px}
+.dive .ba span{background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:2px 9px}
+.dive .ba span span{background:none;border:0;padding:0}
+.dive .ba span.after{background:color-mix(in srgb,var(--accent-2) 14%,transparent);border-color:transparent;color:var(--text);font-weight:600}
+.dive .ba i{font-style:normal;color:var(--muted)}
+.dive p{margin:0;font-size:14px;color:var(--muted)}
+.dive p b{color:var(--text);font-weight:600}
+
 /* contact */
 .contact{background:linear-gradient(135deg,var(--accent) 0%,color-mix(in srgb,var(--accent) 60%,#7c3aed) 100%);
   color:#fff;border-radius:20px;padding:48px;text-align:center}
@@ -181,6 +195,7 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
   <div class="wrap">
     <a class="brand" href="#top">Hikaru Miyashita</a>
     <nav class="links">
+      <a href="#deepdives"><span lang="ja">具体例</span><span lang="en">Deep dives</span></a>
       <a href="#experience"><span lang="ja">職務経歴</span><span lang="en">Experience</span></a>
       <a href="#strengths"><span lang="ja">強み</span><span lang="en">Strengths</span></a>
       <a href="#skills"><span lang="ja">スキル</span><span lang="en">Skills</span></a>
@@ -208,8 +223,76 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
     </p>
   </div>
 
+  <!-- DEEP DIVES -->
+  <section id="deepdives" style="border-top:none;padding-top:8px">
+    <div class="sec-head">
+      <div class="kicker">Deep Dives</div>
+      <h2><span lang="ja">掘り下げの具体例</span><span lang="en">Deep dives</span></h2>
+      <p lang="ja">リアルタイム画像認識の案件で、自分が原因を調べて修正した例です。NDAのため、何を認識しているかは伏せています。</p>
+      <p lang="en">Examples from a real-time vision project where I traced root causes and fixed them. The application domain is withheld under NDA.</p>
+    </div>
+    <div class="dives">
+      <div class="dive">
+        <div class="area">CUDA C++ / NVRTC</div>
+        <h3><span lang="ja">検出ヘッドの候補抽出をCUDAカーネルで自作</span><span lang="en">Custom CUDA kernel for detection-head candidate selection</span></h3>
+        <div class="ba"><span><span lang="ja">約10個のtorch演算＋GPU同期6回</span><span lang="en">~10 torch ops + 6 GPU syncs</span></span><i>→</i><span class="after"><span lang="ja">カーネル2回起動＋同期1回</span><span lang="en">2 kernel launches + 1 sync</span></span></div>
+        <p lang="ja">sigmoid・スコア閾値・(prior, class)ペアの収集を、NVRTCでコンパイルした<b>ストリームコンパクションカーネル</b>に置き換え。torch.nonzeroと同じ順序で出力し、結果はライブラリと<b>ビット単位で一致</b>。複数スレッド・複数GPUでも安全に動くよう修正も実施。</p>
+        <p lang="en">Replaced sigmoid, score thresholding and (prior, class) gathering with an NVRTC-compiled <b>stream-compaction kernel</b> that preserves torch.nonzero order — output is <b>bit-identical</b> to the library. Made it safe across threads and devices.</p>
+      </div>
+      <div class="dive">
+        <div class="area">CUDA Graph / TensorRT</div>
+        <h3><span lang="ja">GPUが「待っている」原因を突き止めCUDA Graph化</span><span lang="en">Found why the GPU sat idle, fixed with CUDA Graphs</span></h3>
+        <div class="ba"><span><span lang="ja">1フレーム約230個の短いカーネル</span><span lang="en">~230 short kernels / frame</span></span><i>→</i><span class="after"><span lang="ja">1つのCUDA Graphをリプレイ</span><span lang="en">one CUDA Graph replay</span></span></div>
+        <p lang="ja">TensorRT化後もGPUはCPUのカーネル起動を待って遊んでいた。backbone〜seg headを<b>一度キャプチャしてフレームごとにリプレイ</b>。出力はビット一致、キャプチャ失敗時は従来経路へフォールバック。あわせて検出ヘッドもTensorRT化（約140カーネル分）。</p>
+        <p lang="en">Even after TensorRT, the GPU idled between CPU-issued launches. <b>Captured backbone → seg head once and replayed it per frame</b>; bit-identical output with a safe fallback. Also compiled the detection head (~140 kernels) with TensorRT.</p>
+      </div>
+      <div class="dive">
+        <div class="area">Triton</div>
+        <h3><span lang="ja">マスク後処理を2つのTritonカーネルに融合</span><span lang="en">Fused mask post-processing into two Triton kernels</span></h3>
+        <div class="ba"><span><span lang="ja">約50個の小さなカーネル</span><span lang="en">~50 tiny kernels</span></span><i>→</i><span class="after"><span lang="ja">Tritonカーネル2個</span><span lang="en">2 Triton kernels</span></span></div>
+        <p lang="ja">インスタンスマスク生成（相対座標・動的1×1畳み込み×3・8倍バイリニア拡大・sigmoid・閾値）は計算量が小さく、時間の大半は<b>カーネル起動のオーバーヘッド</b>だった。動的畳み込みを80×80ブロック単位のtl.dotで計算し、拡大と二値化を2つ目のカーネルで行う構成に。</p>
+        <p lang="en">Instance-mask generation (relative coords, three dynamic 1×1 convs, ×8 bilinear upsample, sigmoid, threshold) was dominated by <b>launch overhead</b>. Computed dynamic convs with tl.dot per 80×80 block, then upsample + threshold in a second kernel.</p>
+      </div>
+      <div class="dive">
+        <div class="area">Multiprocessing / IPC</div>
+        <h3><span lang="ja">プロセス間で送るフレームを約1/9に</span><span lang="en">Cut inter-process frame size ~9×</span></h3>
+        <div class="ba"><span><span lang="ja">18.9MBのフレームを毎回転送</span><span lang="en">18.9 MB frame per transfer</span></span><i>→</i><span class="after"><span lang="ja">約2MBに縮小して転送</span><span lang="en">~2 MB per transfer</span></span></div>
+        <p lang="ja">認識プロセスのメインスレッド時間の<b>約1/3がフレーム受信</b>に使われ、負荷時にカメラに追いつけず数秒の遅延が発生していた。射影変換をカメラ側の子プロセスへ移し、必要な領域だけを送るように変更。</p>
+        <p lang="en">About <b>a third of the recognition main thread</b> was spent receiving frames, causing seconds of lag under load. Moved the perspective warp into the camera child process so only the needed region is sent.</p>
+      </div>
+      <div class="dive">
+        <div class="area">Memory</div>
+        <h3><span lang="ja">長時間稼働で増え続けるメモリの原因を特定</span><span lang="en">Tracked down unbounded memory growth</span></h3>
+        <div class="ba"><span><span lang="ja">1時間あたり約3.1GB増加</span><span lang="en">~3.1 GB / hour growth</span></span><i>→</i><span class="after"><span lang="ja">上限付き履歴で一定に</span><span lang="en">bounded and flat</span></span></div>
+        <p lang="ja">追跡中の物体の履歴が追記のみで、<b>静止し続ける物体は削除条件を満たさない</b>ことを突き止めた（実測1911B/フレーム）。絶対インデックスを保ったまま直近の履歴だけを保持するよう変更し、常にFalseを返していた遮蔽判定のバグも修正。</p>
+        <p lang="en">Found that per-object history was append-only and <b>objects that never move never met the deletion condition</b> (measured 1911 B/frame). Bounded the history while keeping absolute indices stable, and fixed an occlusion check that always returned False.</p>
+      </div>
+      <div class="dive">
+        <div class="area">Concurrency / Correctness</div>
+        <h3><span lang="ja">乱数IDの衝突による「静かな誤り」を根絶</span><span lang="en">Eliminated silent errors from random-ID collisions</span></h3>
+        <div class="ba"><span><span lang="ja">16bit乱数ID：300個で衝突確率約50%</span><span lang="en">16-bit random IDs: ~50% collision at 300</span></span><i>→</i><span class="after"><span lang="ja">単調カウンタ＋ロックで重複ゼロ</span><span lang="en">monotonic counter + lock: zero duplicates</span></span></div>
+        <p lang="ja">デバッグ用とされていたIDが実際は物体の同一性のキーとして使われ、衝突すると<b>例外も出ずにもっともらしい誤った結果</b>になることを特定。構造的に一意なIDへ置き換え、10万件の逐次生成と8スレッド4万件の並行生成で重複ゼロを検証。</p>
+        <p lang="en">An ID labeled "for debugging" was actually the identity key — a collision produced <b>a plausible but wrong result with no error</b>. Replaced it with structurally unique IDs, verified with 100k sequential and 40k concurrent (8 threads) generations.</p>
+      </div>
+      <div class="dive">
+        <div class="area">OpenCV internals</div>
+        <h3><span lang="ja">cv2.dilateの引数の解釈違いを発見</span><span lang="en">Caught a misread argument in cv2.dilate</span></h3>
+        <div class="ba"><span><span lang="ja">下方向に15pxだけ膨張</span><span lang="en">dilated 15 px downward only</span></span><i>→</i><span class="after"><span lang="ja">全方向に30px膨張</span><span lang="en">30 px in every direction</span></span></div>
+        <p lang="ja">カーネルにタプルを渡していたため、OpenCVがそれを<b>形状(2,)の構造要素</b>として解釈していた。その結果、変化検出の領域がほとんど広がらず、境界付近の動きを見逃していた。明示的な5×5カーネルに修正し、4方向の膨張量を測る回帰テストを追加。</p>
+        <p lang="en">A tuple passed as the kernel was read by OpenCV as a <b>shape-(2,) structuring element</b>, so the change-detection ROI barely grew and motion near the edges was missed. Fixed with an explicit 5×5 kernel and a regression test measuring all four directions.</p>
+      </div>
+      <div class="dive">
+        <div class="area">TensorRT / Library internals</div>
+        <h3><span lang="ja">再起動のたびに黙ってTensorRTが無効になる問題</span><span lang="en">TensorRT silently disabled on every restart</span></h3>
+        <div class="ba"><span><span lang="ja">毎回eager実行にフォールバック</span><span lang="en">eager fallback on every start</span></span><i>→</i><span class="after"><span lang="ja">コンパイル済みモジュールを再利用</span><span lang="en">compiled modules reused</span></span></div>
+        <p lang="ja">torch-tensorrtのエンジンキャッシュが、重みを除いたエンジンの再ロード時に<b>BatchNormの重み名の不一致</b>でKeyErrorを起こし、気付かれないまま毎回eager実行になっていた。重み込みで保存し、重み・ライブラリ・GPU・入力形状をキーに直接ロードする方式に変更。</p>
+        <p lang="en">torch-tensorrt’s engine cache hit a KeyError from <b>mismatched BatchNorm weight names</b> when refitting stripped engines, silently falling back to eager. Saved modules with weights and loaded them keyed by weights, library versions, GPU and input shape.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- EXPERIENCE -->
-  <section id="experience" style="border-top:none;padding-top:8px">
+  <section id="experience">
     <div class="sec-head">
       <div class="kicker">Experience</div>
       <h2><span lang="ja">職務経歴</span><span lang="en">Experience</span></h2>
