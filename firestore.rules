@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 書き込みは本人（Google でログインしたこのメールアドレス）だけ
+    function owner() {
+      return request.auth != null
+        && request.auth.token.email == 'hikakin0706@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+
+    function validCat(c) {
+      return c in ['study', 'dev', 'work', 'read', 'sport', 'life', 'other'];
+    }
+
+    // 活動ログ
+    match /logs/{id} {
+      function valid(d) {
+        return d.keys().hasOnly(['date', 'cat', 'title', 'body', 'tags', 'url', 'minutes', 'public', 'createdAt', 'updatedAt'])
+          && d.date is string && d.date.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+          && validCat(d.cat)
+          && d.title is string && d.title.size() > 0 && d.title.size() <= 100
+          && d.body is string && d.body.size() <= 5000
+          && d.tags is list && d.tags.size() <= 10
+          && d.url is string && d.url.size() <= 500
+          && (d.minutes == null || (d.minutes is int && d.minutes >= 0 && d.minutes <= 1440))
+          && d.public is bool
+          && d.createdAt is timestamp
+          && d.updatedAt == request.time;
+      }
+
+      // 公開分は誰でも読める。非公開分は本人だけ
+      allow read: if resource.data.public == true || owner();
+      allow create: if owner() && valid(request.resource.data) && request.resource.data.createdAt == request.time;
+      allow update: if owner() && valid(request.resource.data) && request.resource.data.createdAt == resource.data.createdAt;
+      allow delete: if owner();
+    }
+  }
+}

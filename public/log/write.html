@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ログを書く | Hikaru Miyashita</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231f4fd8'/%3E%3Ctext x='16' y='22' font-family='Arial' font-weight='700' font-size='15' fill='white' text-anchor='middle'%3EHM%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/log/log.css">
+<script>
+(function(){var t=null;try{t=localStorage.getItem('theme')}catch(e){}if(t)document.documentElement.setAttribute('data-theme',t)})();
+</script>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="/">Hikaru Miyashita</a>
+  <nav>
+    <a href="/log/">ログ</a>
+    <a href="/log/write" aria-current="page">書く</a>
+  </nav>
+  <button class="btn-ghost" id="authBtn" type="button">ログイン</button>
+</div></header>
+
+<main class="wrap">
+  <div class="hero">
+    <div class="kicker">Write</div>
+    <h1>ログを書く</h1>
+    <p class="lead">本人専用。今日やったことを短くても残す。</p>
+  </div>
+
+  <div id="gate" class="notice">読み込み中…</div>
+
+  <form id="form" class="card" hidden>
+    <div class="row">
+      <label class="field"><span>日付</span><input name="date" type="date" required></label>
+      <label class="field"><span>かかった時間（分、任意）</span><input name="minutes" type="number" min="0" max="1440" step="5" placeholder="60"></label>
+    </div>
+    <div class="field"><span>カテゴリ</span><div class="catpick" id="catpick"></div></div>
+    <label class="field"><span>タイトル</span><input name="title" maxlength="100" required placeholder="例：CUDA の shared memory バンク競合を調べた"></label>
+    <label class="field"><span>本文（任意）</span><textarea name="body" maxlength="5000" placeholder="学んだこと、気づき、次にやること。URL は自動でリンクになります"></textarea></label>
+    <div class="row">
+      <label class="field"><span>タグ（カンマ区切り、任意）</span><input name="tags" maxlength="200" placeholder="cuda, gpu"></label>
+      <label class="field"><span>リンク（任意）</span><input name="url" type="url" maxlength="500" placeholder="https://"></label>
+    </div>
+    <label class="check"><input name="public" type="checkbox" checked> 経歴サイトに公開する</label>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button class="btn btn-primary" type="submit" id="saveBtn">保存</button>
+      <button class="btn" type="button" id="cancelBtn" hidden>編集をやめる</button>
+      <span class="msg" id="msg"></span>
+    </div>
+  </form>
+
+  <div id="list" style="margin-top:28px"></div>
+</main>
+
+<script type="module">
+import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js'
+import { addDoc, collection, deleteDoc, doc, getDocs, limit, orderBy, query, serverTimestamp, updateDoc } from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js'
+import { CATS, OWNER_EMAIL, app, db, esc, fmtMonth, monthKey, renderEntry, toEntry, todayStr } from '/log/fb.js'
+
+const auth = getAuth(app)
+const gate = document.getElementById('gate')
+const form = document.getElementById('form')
+const list = document.getElementById('list')
+const msg = document.getElementById('msg')
+const authBtn = document.getElementById('authBtn')
+const cancelBtn = document.getElementById('cancelBtn')
+const saveBtn = document.getElementById('saveBtn')
+const DRAFT = 'log-draft'
+
+// カテゴリ選択
+const catpick = document.getElementById('catpick')
+catpick.innerHTML = Object.entries(CATS).map(([k, c], i) =>
+  `<label><input type="radio" name="cat" value="${k}" ${i === 0 ? 'checked' : ''}><span style="--c:${c.color}">${c.label}</span></label>`).join('')
+
+let editing = null
+let entries = []
+
+const say = (text, err = false) => { msg.textContent = text; msg.classList.toggle('err', err) }
+
+function setupError(e) {
+  const code = e?.code || ''
+  if (code === 'auth/operation-not-allowed' || code === 'auth/configuration-not-found' || code === 'auth/admin-restricted-operation') {
+    gate.innerHTML = `<b>Firebase の Authentication がまだ有効になっていません。</b><br>
+      <a href="https://console.firebase.google.com/project/hikaru-miyashita/authentication/providers" target="_blank" rel="noopener">コンソールの Authentication</a>
+      で「始める」→ ログイン方法「Google」を有効にして保存したら、このページを再読み込みしてください。`
+    return true
+  }
+  return false
+}
+
+authBtn.onclick = async () => {
+  if (auth.currentUser) { await signOut(auth); return }
+  try { await signInWithPopup(auth, new GoogleAuthProvider()) }
+  catch (e) { console.error(e); if (!setupError(e) && e.code !== 'auth/popup-closed-by-user') gate.textContent = `ログインできませんでした（${e.code || e.message}）` }
+}
+
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    authBtn.textContent = 'ログイン'
+    form.hidden = true
+    list.innerHTML = ''
+    gate.hidden = false
+    gate.innerHTML = 'Google でログインしてください。<br><small>書き込めるのは本人のアカウントだけです。</small>'
+    return
+  }
+  authBtn.textContent = 'ログアウト'
+  if (user.email !== OWNER_EMAIL) {
+    gate.hidden = false
+    gate.innerHTML = `このアカウント（${esc(user.email)}）には書き込み権限がありません。`
+    form.hidden = true
+    return
+  }
+  gate.hidden = true
+  form.hidden = false
+  restoreDraft()
+  load()
+})
+
+// フォーム
+function formData() {
+  const f = new FormData(form)
+  const minutes = f.get('minutes') === '' ? null : Math.max(0, Math.min(1440, Math.floor(Number(f.get('minutes')))))
+  return {
+    date: f.get('date'),
+    cat: f.get('cat'),
+    title: f.get('title').trim(),
+    body: f.get('body').trim(),
+    tags: f.get('tags').split(/[,、\s]+/).map((t) => t.replace(/^#/, '').trim()).filter(Boolean).slice(0, 10),
+    url: f.get('url').trim(),
+    minutes,
+    public: f.get('public') === 'on',
+  }
+}
+function fill(e) {
+  form.date.value = e.date
+  form.minutes.value = e.minutes ?? ''
+  form.querySelector(`input[name=cat][value=${e.cat}]`)?.click()
+  form.title.value = e.title
+  form.body.value = e.body || ''
+  form.tags.value = (e.tags || []).join(', ')
+  form.url.value = e.url || ''
+  form.public.checked = e.public !== false
+}
+function resetForm() {
+  editing = null
+  form.reset()
+  form.date.value = todayStr()
+  form.public.checked = true
+  cancelBtn.hidden = true
+  saveBtn.textContent = '保存'
+  try { localStorage.removeItem(DRAFT) } catch {}
+}
+function restoreDraft() {
+  try {
+    const d = JSON.parse(localStorage.getItem(DRAFT) || 'null')
+    if (d && (d.title || d.body)) { fill({ ...d, date: d.date || todayStr() }); say('下書きを復元しました'); return }
+  } catch {}
+  resetForm()
+}
+form.addEventListener('input', () => {
+  if (editing) return
+  try { localStorage.setItem(DRAFT, JSON.stringify(formData())) } catch {}
+})
+cancelBtn.onclick = resetForm
+
+form.addEventListener('submit', async (ev) => {
+  ev.preventDefault()
+  const data = formData()
+  if (!data.title) return say('タイトルを入力してください', true)
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(data.date)) return say('日付を選んでください', true)
+  saveBtn.disabled = true
+  try {
+    if (editing) {
+      await updateDoc(doc(db, 'logs', editing), { ...data, updatedAt: serverTimestamp() })
+      say('更新しました')
+    } else {
+      await addDoc(collection(db, 'logs'), { ...data, createdAt: serverTimestamp(), updatedAt: serverTimestamp() })
+      say('保存しました')
+    }
+    resetForm()
+    await load()
+  } catch (e) {
+    console.error(e)
+    say(`保存できませんでした（${e.code || e.message}）`, true)
+  } finally {
+    saveBtn.disabled = false
+  }
+})
+
+// 一覧（本人なので非公開も含めて全部）
+async function load() {
+  try {
+    const snap = await getDocs(query(collection(db, 'logs'), orderBy('date', 'desc'), orderBy('createdAt', 'desc'), limit(500)))
+    entries = snap.docs.map(toEntry)
+  } catch (e) {
+    console.error(e)
+    list.innerHTML = `<p class="empty">一覧を読み込めませんでした（${esc(e.code || e.message)}）</p>`
+    return
+  }
+  if (!entries.length) { list.innerHTML = '<p class="empty">最初の記録を書いてみましょう。</p>'; return }
+  let html = ''
+  let month = ''
+  for (const e of entries) {
+    const mk = monthKey(e.date)
+    if (mk !== month) { month = mk; html += `<h2 class="month">${fmtMonth(mk)}</h2>` }
+    html += renderEntry(e, { actions: `<span class="actions"><button class="btn-ghost" data-act="edit">編集</button><button class="btn-ghost" data-act="del">削除</button></span>` })
+  }
+  list.innerHTML = html
+}
+
+list.addEventListener('click', async (ev) => {
+  const b = ev.target.closest('button[data-act]')
+  if (!b) return
+  const id = b.closest('.entry').dataset.id
+  const e = entries.find((x) => x.id === id)
+  if (!e) return
+  if (b.dataset.act === 'edit') {
+    editing = id
+    fill(e)
+    cancelBtn.hidden = false
+    saveBtn.textContent = '更新'
+    say(`「${e.title}」を編集中`)
+    form.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  } else if (confirm(`「${e.title}」を削除しますか？`)) {
+    try { await deleteDoc(doc(db, 'logs', id)); say('削除しました'); await load() }
+    catch (err) { console.error(err); say(`削除できませんでした（${err.code || err.message}）`, true) }
+  }
+})
+</script>
+</body>
+</html>

@@ -118,6 +118,17 @@ section{padding:64px 0;border-top:1px solid var(--line)}
 .sec-head p{color:var(--muted);margin:8px 0 0;max-width:720px}
 
 .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+
+/* activity log */
+.act-list{display:grid;gap:10px}
+.act{display:grid;grid-template-columns:auto auto 1fr;gap:12px;align-items:baseline;padding:12px 16px;background:var(--surface);border:1px solid var(--line);border-radius:12px;color:var(--text)}
+.act:hover{text-decoration:none;border-color:var(--accent)}
+.act time{font:500 12px "JetBrains Mono",monospace;color:var(--muted);white-space:nowrap}
+.act .chip{display:inline-block;padding:0 9px;border-radius:999px;font-size:12px;font-weight:700;color:var(--c);background:color-mix(in srgb,var(--c) 12%,transparent);white-space:nowrap}
+.act b{font-weight:700;font-size:15px}
+.act small{display:block;color:var(--muted);font-size:13px;line-height:1.6;margin-top:2px}
+.act-more{display:inline-block;margin-top:14px;font-weight:600;font-size:14px}
+@media (max-width:600px){.act{grid-template-columns:auto auto;}.act b{grid-column:1/-1}}
 @media (max-width:760px){.grid-2{grid-template-columns:1fr}}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;box-shadow:var(--shadow)}
 .card .ico{width:40px;height:40px;border-radius:10px;background:var(--accent-soft);color:var(--accent);
@@ -243,6 +254,7 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
       <a href="#strengths"><span lang="ja">強み</span><span lang="en">Strengths</span></a>
       <a href="#skills"><span lang="ja">スキル</span><span lang="en">Skills</span></a>
       <a href="#background"><span lang="ja">バックグラウンド</span><span lang="en">Background</span></a>
+      <a href="#activity"><span lang="ja">ログ</span><span lang="en">Log</span></a>
       <a href="#youtube">YouTube</a>
       <a href="#services"><span lang="ja">対応領域</span><span lang="en">Services</span></a>
       <a href="#contact"><span lang="ja">お問い合わせ</span><span lang="en">Contact</span></a>
@@ -789,6 +801,18 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
     </div>
   </section>
 
+  <!-- ACTIVITY LOG -->
+  <section id="activity">
+    <div class="sec-head">
+      <div class="kicker">Activity log</div>
+      <h2><span lang="ja">最近の活動</span><span lang="en">Recent activity</span></h2>
+      <p lang="ja">勉強したこと、作ったもの、読んだ本の記録です。</p>
+      <p lang="en">A running log of what I'm studying, building and reading (in Japanese).</p>
+    </div>
+    <div class="act-list" id="actList"><span style="color:var(--muted);font-size:14px"><span lang="ja">読み込み中…</span><span lang="en">Loading…</span></span></div>
+    <a class="act-more" href="/log/"><span lang="ja">ログをすべて見る →</span><span lang="en">See the full log →</span></a>
+  </section>
+
   <!-- YOUTUBE -->
   <section id="youtube">
     <div class="sec-head">
@@ -863,6 +887,29 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:13px;text-align:center}
   };
   document.getElementById('yr').textContent=new Date().getFullYear();
 })();
+</script>
+<script type="module">
+// 「最近の活動」は画面に近づいてから Firestore を読む（経歴ページ本体を重くしない）
+const box = document.getElementById('actList')
+const load = async () => {
+  try {
+    const [{ collection, getDocs, limit, orderBy, query, where }, { CATS, db, esc, fmtDate }] = await Promise.all([
+      import('https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js'),
+      import('/log/fb.js'),
+    ])
+    const snap = await getDocs(query(collection(db, 'logs'), where('public', '==', true), orderBy('date', 'desc'), orderBy('createdAt', 'desc'), limit(5)))
+    if (snap.empty) { box.innerHTML = '<span style="color:var(--muted);font-size:14px"><span lang="ja">まだ記録がありません。</span><span lang="en">No entries yet.</span></span>'; return }
+    box.innerHTML = snap.docs.map((d) => {
+      const e = d.data(); const c = CATS[e.cat] || CATS.other
+      const body = (e.body || '').split('\n')[0].slice(0, 90)
+      return `<a class="act" href="/log/"><time>${fmtDate(e.date)}</time><span class="chip" style="--c:${c.color}">${c.label}</span><b>${esc(e.title)}${body ? `<small>${esc(body)}</small>` : ''}</b></a>`
+    }).join('')
+  } catch (e) { console.error(e); box.innerHTML = '<a href="/log/" style="font-size:14px">ログを見る →</a>' }
+}
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver((es) => { if (es.some((x) => x.isIntersecting)) { io.disconnect(); load() } }, { rootMargin: '400px' })
+  io.observe(box)
+} else load()
 </script>
 </body>
 </html>
